@@ -1,4 +1,4 @@
-# A fake template engine in Bourne compatible shells (sh, bash, ash/busybox, zsh)
+# A fake template engine in sh-compatible shells
 
 ## What is it?
 
