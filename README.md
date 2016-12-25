@@ -13,7 +13,7 @@ Table of Contents
 ## What is it?
 
 It's not a real template engine or a compleate program.
-Although, it's a working solution for a simple idea of using shell inlines as a templates.
+This is a working solution for a simple idea of using shell inlines as a templates.
 
 The solutions is done as a little function which is called `faketpl`. It's compatible with many sh-like shell because uses only basic instructions, which can be included in any script, either as a one-liner or external script (after downloading from the Internet). Faketpl is tested in Bourne shell (sh), bash, zsh and ash (Busybox).
 
