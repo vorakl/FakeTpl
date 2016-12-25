@@ -76,7 +76,7 @@ and then, set some values for variables in our "template" file. To render the fi
 
 ```bash
 export MYNAME=Oleksii
-faketpl < index.html.ftpl > index.html
+(faketpl < index.html.ftpl > index.html)
 ```
 If in the `index.html.ftpl` was this text:
 
