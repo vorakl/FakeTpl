@@ -39,7 +39,7 @@ Then, send a text with templates to stdin like:
 (echo -e "Workers $(grep processor /proc/cpuinfo | wc -l)\nVirtualHost $(cat /proc/sys/kernel/hostname):${RANDOM}\nUsername ${SRV_NAME:-www}" | faketpl)
 ```
 
-If this command was run in a basic official docker container with Apline linux with only Busybox on the board, then as a result, you'd get something like:
+If this command is run in a basic official docker container with Apline linux with only Busybox on the board, then as a result, you'll see something like this
 
 ```bash
 Workers 4
@@ -47,7 +47,7 @@ VirtualHost 1a614d65b09c:10915
 Username www
 ```
 
-That could be a config file of a web-server, for example. Of course, more useful examples can be found in the end of the README ;) And pay attention on using parentheses! They are always needed. The explanation "why?" will be given a bit later.
+That could be a config file of a web-server, for example. Of course, more useful examples can be found below ;) And pay attention on using parentheses! They are always needed. The explanation "why?" will be given a bit later.
 
 ### As an included script.
 
@@ -78,7 +78,7 @@ and then, set some values for variables in our "template" file. To render the fi
 export MYNAME=Oleksii
 (faketpl < index.html.ftpl > index.html)
 ```
-If in the `index.html.ftpl` was this text:
+If the `index.html.ftpl` has this text:
 
 ```bash
 <!DOCTYPE html>
@@ -91,7 +91,7 @@ If in the `index.html.ftpl` was this text:
 </html>
 ```
 
-then the result, `index.html`, would be like:
+then, `index.html` will have this result
 
 ```bash
 <!DOCTYPE html>
