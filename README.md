@@ -15,25 +15,25 @@ Table of Contents
 It's not a real template engine or a compleate program.
 This is a working solution for a simple idea of using shell inlines as a templates.
 
-The solutions is done as a little function which is called `faketpl`. It's compatible with many sh-like shell because uses only basic instructions, which can be included in any script, either as a one-liner or external script (after downloading from the Internet). Faketpl is tested in Bourne shell (sh), bash, zsh and ash (Busybox).
+The solutions is done as a little function which is called `faketpl`. It's compatible with many sh-like shells because uses only basic instructions, which can be included in any script, either as a one-liner or an external script (after downloading from the Internet). Faketpl was tested in Bourne shell (sh), bash, zsh and ash (Busybox).
 
-Being so simple in terms of the idea or a realization, it's, in most cases, much more powerful than real template engines! It allows to use most features of a shell interpreter as templates with the only limitation of writing them in one line. That means, there are conditions, loops, a result of executing command, content of files, etc and the only real dependency is a shell.
+Being so simple in terms of the idea and realization, it's, in most cases, much more powerful than real template engines! It allows to use most features of a shell interpreter as templates with the only limitation of writing them in one line. That means, there are conditions, loops, a result of executing commands, content of files, etc and the only real dependency is a shell.
 
 ## How to get started?
 
-Being compatible with many shells at the same time, faketpl cannot use one of them by default. But it's not a limitation. It's a freedom of a choice. Just "include" it in your script which is written in any sh-like language and start using as a function. There are two options: include as an one-liner or as a script from the Internet.
+Being compatible with many shells at the same time, faketpl cannot use one of them by default. But it's not a limitation. It's a freedom of a choice. Just "include" it into your script which is written in any sh-like language and start using as a function. There are two options: include as an one-liner or as a script from the Internet.
 
 ### As a one-liner.
 
-This is a simplest one and the most reliable way. It doesn't require an internet connection but will be hard-coded once is added. That defines a use case: when you need to integrate the fake engine to some existing script/environment once and use it without any requirements. 
-So, just put this string in the shell code:
+This is a simplest and the most reliable one. It doesn't require an internet connection but will be hard-coded once it's added. That defines a use case: when you need to integrate the fake engine with some existing script/environment once and use then without any requirements. 
+So, just put this string in your shell code:
 
 ```bash
 faketpl() { export IFS=''; while read -r _line; do eval echo \"${_line}\"; done; }
 ```
 
-Yep, that's only a one-line, in fact. Nothing more.
-Then send a text with templates to stdin like:
+Yep, that's only one line, really. Nothing more.
+Then, send a text with templates to stdin like:
 
 ```bash
 (echo -e "Workers $(grep processor /proc/cpuinfo | wc -l)\nVirtualHost $(cat /proc/sys/kernel/hostname):${RANDOM}\nUsername ${SRV_NAME:-www}" | faketpl)
@@ -66,13 +66,13 @@ or using curl, as root:
 curl -sSLfo /usr/bin/faketpl.sh http://faketpl.vorakl.name/faketpl.sh
 ```
 
-Then, include in the script by `source` or `.` command without specifying a full path:
+Then, include it in the script by `source` or `.` command without specifying a full path:
 
 ```bash
 source faketpl.sh
 ```
 
-and then, set some values for variables in our "template" file. To render the file, just send to the function some text with "templates" and write an output to a real file:
+and then, set some values for variables in our "template" file. To render the file, just send to the function this text with "templates" and write an output to a real file:
 
 ```bash
 export MYNAME=Oleksii
