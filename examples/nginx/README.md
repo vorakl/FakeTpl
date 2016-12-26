@@ -1,4 +1,4 @@
-# The example of docker image based on an oficial Nginx's image
+# The example of docker image based on an official Nginx's image
 
 ## Build
 
