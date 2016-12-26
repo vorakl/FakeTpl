@@ -134,3 +134,111 @@ Basically, it's as simple as go line by line trough the whole stream from stdin 
 
 ## Examples
 
+### default values
+
+```bash
+input> (echo "[${MYVAR:-default}]" | faketpl)
+
+output>
+[default]
+```
+
+```bash
+input> (MYVAR=something; echo "[${MYVAR:-default}]" | faketpl)
+
+output>
+[something]
+```
+
+### if some variable wasn't set, then raise the error
+
+To raise an error we need `set -u`
+
+```bash
+(set -u; faketpl <<< "${ASD}") 2> /dev/null || { echo "Error: ASD variable has to be set"; exit 1; }
+
+or
+
+(set -u; faketpl < some.conf.ftpl > some.conf) 2> /dev/null || { echo "Error: ASD variable has to be set"; exit 1; }
+
+but, if you use pipelines, it requires to set one moe option `set -o pipefail`
+
+```bash
+( set -uo pipefail; echo "${ASD}" | faketpl) 2> /dev/null || { echo "Error: ASD variable has to be set"; exit 1; }
+```
+
+### using arrays
+
+To use arrays we need a shell that supports them, like Bash. Don't forget to declare an array as `declare -a VAR` first, especially if it's an associative array `declare -A var`.
+
+Let's make a template of a config file for HAProxy
+
+```bash
+global
+    log /host-journal/dev-log local0
+    maxconn ${MAXCONN:-2000}
+    stats socket /tmp/haproxy.sock
+
+defaults
+    log     global
+    mode    http
+    option  httplog
+    option  dontlognull
+    retries 3
+    option  redispatch
+    option  forwardfor
+    timeout connect ${TIMEOUT_CONNECT:-5000}
+    timeout client  ${TIMEOUT_CLIENT:-10000}
+    timeout server  ${TIMEOUT_SERVER:-10000}
+
+frontend web
+    bind    :80
+    default_backend web_dyn
+
+backend web_dyn
+   balance ${LB_ALG:-roundrobin}
+$(IFS=' '; for host in $(tr ' ' '\n' <<< ${!BACKEND[@]} | sort -n | tr '\n' ' '); do echo "   server ${host} ${BACKEND[${host}]}:80 check"; done)
+```
+
+Then we can get a dynamic configuration like
+
+```bash
+declare -A BACKEND
+export BACKEND=([web1]=192.168.1.10 [web2]=192.168.2.10 [web3]=192.168.3.10)
+export TIMEOUT_SERVER=15000
+(faketpl < haproxy.cfg.ftpl > haproxy.cfg)
+```
+
+then in the haproxy.cfg we'll see
+
+```bash
+global
+    log /host-journal/dev-log local0
+    maxconn 2000
+    stats socket /tmp/haproxy.sock
+
+defaults
+    log     global
+    mode    http
+    option  httplog
+    option  dontlognull
+    retries 3
+    option  redispatch
+    option  forwardfor
+    timeout connect 5000
+    timeout client  10000
+    timeout server  15000
+
+frontend web
+    bind    :80
+    default_backend web_dyn
+
+backend web_dyn
+   balance roundrobin
+   server web1 192.168.1.10:80 check
+   server web2 192.168.2.10:80 check
+   server web3 192.168.3.10:80 check
+```
+
+More examples can be found in `examples/` directory.
+
