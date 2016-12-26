@@ -150,16 +150,22 @@ output>
 [something]
 ```
 
-### if some variable wasn't set, then raise the error
+### if some variable wasn't set, then raise an error
 
 To raise an error we need `set -u`
 
 ```bash
-(set -u; faketpl <<< "${ASD}") 2> /dev/null || { echo "Error: ASD variable has to be set"; exit 1; }
+input> (set -u; faketpl <<< "${ASD}") 2> /dev/null || { echo "Error: ASD variable has to be set"; exit 1; }
+
+output>
+Error: ASD variable has to be set
+```
 
 or
 
+```bash
 (set -u; faketpl < some.conf.ftpl > some.conf) 2> /dev/null || { echo "Error: ASD variable has to be set"; exit 1; }
+```
 
 but, if you use pipelines, it requires to set one moe option `set -o pipefail`
 
