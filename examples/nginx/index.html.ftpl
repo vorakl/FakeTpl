@@ -1,0 +1,8 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <h1>Welcome to $(cat /proc/sys/kernel/hostname)</h1>
+        <div>My name is: <b>${MYNAME:-default}</b></div>
+        <div>Random number: <b>${RANDOM}</b></div>
+    </body>
+</html>

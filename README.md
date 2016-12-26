@@ -19,6 +19,8 @@ The solutions is done as a little function which is called `faketpl`. It's compa
 
 Being so simple in terms of the idea and realization, it's, in most cases, much more powerful than real template engines! It allows to use most features of a shell interpreter as templates with the only limitation of writing them in one line. That means, there are conditions, loops, a result of executing commands, content of files, etc and the only real dependency is a shell.
 
+To eliminate any security issues related to direct executing commands, this solution is meant to be used primarily in the isolated container's environment like Docker.
+
 ## How to get started?
 
 Being compatible with many shells at the same time, faketpl cannot use one of them by default. But it's not a limitation. It's a freedom of a choice. Just "include" it into your script which is written in any sh-like language and start using as a function. There are two options: include as an one-liner or as a script from the Internet.
