@@ -167,7 +167,7 @@ or
 (set -u; faketpl < some.conf.ftpl > some.conf) 2> /dev/null || { echo "Error: ASD variable has to be set"; exit 1; }
 ```
 
-but, if you use pipelines, it requires to set one moe option `set -o pipefail`
+but, if you use a pipeline, it requires to set one more option `set -o pipefail`
 
 ```bash
 ( set -uo pipefail; echo "${ASD}" | faketpl) 2> /dev/null || { echo "Error: ASD variable has to be set"; exit 1; }
@@ -175,9 +175,9 @@ but, if you use pipelines, it requires to set one moe option `set -o pipefail`
 
 ### using arrays
 
-To use arrays we need a shell that supports them, like Bash. Don't forget to declare an array as `declare -a VAR` first, especially if it's an associative array `declare -A var`.
+To use arrays we need a shell that supports them, like Bash. Don't forget to declare an array as `declare -a VAR` first, especially if it's an associative array as `declare -A var`.
 
-Let's make a template of a config file for HAProxy
+Let's make a template `haproxy.cfg.ftpl` of a config file for HAProxy
 
 ```bash
 global
@@ -206,7 +206,7 @@ backend web_dyn
 $(IFS=' '; for host in $(tr ' ' '\n' <<< ${!BACKEND[@]} | sort -n | tr '\n' ' '); do echo "   server ${host} ${BACKEND[${host}]}:80 check"; done)
 ```
 
-Then we can get a dynamic configuration like
+Then we can get a particular configuration for this instance like
 
 ```bash
 declare -A BACKEND
@@ -215,7 +215,7 @@ export TIMEOUT_SERVER=15000
 (faketpl < haproxy.cfg.ftpl > haproxy.cfg)
 ```
 
-then in the haproxy.cfg we'll see
+then in the `haproxy.cfg` we'll see
 
 ```bash
 global
@@ -246,5 +246,5 @@ backend web_dyn
    server web3 192.168.3.10:80 check
 ```
 
-More examples can be found in `examples/` directory.
+### More examples can be found in `examples/` directory.
 
