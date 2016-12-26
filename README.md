@@ -23,23 +23,22 @@ Being so simple in terms of the idea and realization, it's, in most cases, much 
 
 Being compatible with many shells at the same time, faketpl cannot use one of them by default. But it's not a limitation. It's a freedom of a choice. Just "include" it into your script which is written in any sh-like language and start using as a function. There are two options: include as an one-liner or as a script from the Internet.
 
-### As a one-liner.
+### ...as a one-liner.
 
-This is a simplest and the most reliable one. It doesn't require an internet connection but will be hard-coded once it's added. That defines a use case: when you need to integrate the fake engine with some existing script/environment once and use then without any requirements. 
-So, just put this string in your shell code:
+This is the simplest and the most reliable one. It doesn't require an internet connection but will be hard-coded once it's added. That defines a use case: when you need to integrate the fake engine with some existing script/environment once and e then it without any requirements. So, just put this string in your shell code:
 
 ```bash
 faketpl() { export IFS=''; while read -r _line; do eval echo \"${_line}\"; done; }
 ```
 
-Yep, that's only one line, really. Nothing more.
+Yep, that's only one line, really. Nothing more! :)
 Then, send a text with templates to stdin like:
 
 ```bash
 (echo -e "Workers $(grep processor /proc/cpuinfo | wc -l)\nVirtualHost $(cat /proc/sys/kernel/hostname):${RANDOM}\nUsername ${SRV_NAME:-www}" | faketpl)
 ```
 
-If this command is run in a basic official docker container with Apline linux with only Busybox on the board, then as a result, you'll see something like this
+If this command is run in a basic official docker container with Apline Linux with only Busybox on the board, then as a result, you'll see something like this
 
 ```bash
 Workers 4
@@ -47,32 +46,32 @@ VirtualHost 1a614d65b09c:10915
 Username www
 ```
 
-That could be a config file of a web-server, for example. Of course, more useful examples can be found below ;) And pay attention on using parentheses! They are always needed. The explanation "why?" will be given a bit later.
+That could be a part of some sort of dynamic config file of a web-server, right? Of course, more useful examples can be found below ;) And pay attention on using bounding parentheses! They are always needed. The explanation "why?" will be given a bit later.
 
-### As an included script.
+### ...as an included script.
 
-The use case for this option is to use in automated build environments, when you build an application from scratch. For example, while your pipeline builds a new docker image with some application, faketpl can be downloaded from the Internet by the instruction from a Dockerfile and then be invoked at run-time from the Entrypoint to transform templates to real configuration files, or html pages, or whatever else. As I've mentioned before, to support several backends (shells) at the same time, faketpl can be used only after "sourcing" it in the script and then being invoked as a function. 
+The use case for this option is to use it in automated build environments, when you build an application from scratch. For example, while your pipeline builds a new docker image with some application, faketpl can be downloaded from the Internet by the instruction from a Dockerfile and then be invoked at run-time from the Entrypoint to transform templates to real configuration files, or html pages, or whatever else. As I've mentioned before, to support several backends (shells) at the same time, faketpl can be used only after "sourcing" it in the script and then being used as a function. 
 So, let's download the script from the Github (faketpl.vorakl.name is an alias to the Github).
 
-For a Busybox backend, as root:
+For a Busybox backend, run as root
 
 ```bash
 wget -qO /usr/bin/faketpl.sh http://faketpl.vorakl.name/faketpl.sh
 ```
 
-or using curl, as root:
+or using curl, run as root
 
 ```bash
 curl -sSLfo /usr/bin/faketpl.sh http://faketpl.vorakl.name/faketpl.sh
 ```
 
-Then, include it in the script by `source` or `.` command without specifying a full path:
+Then, include it in the script by `source` or `.` command without specifying a full path (because it's in the $PATH, in one of the standart directory for binaries)
 
 ```bash
 source faketpl.sh
 ```
 
-and then, set some values for variables in our "template" file. To render the file, just send to the function this text with "templates" and write an output to a real file:
+and then, set some values for variables from our "template" file. To render the file, just send it to the function and write an output to a real file:
 
 ```bash
 export MYNAME=Oleksii
