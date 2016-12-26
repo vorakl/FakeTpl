@@ -248,5 +248,31 @@ backend web_dyn
    server web3 192.168.3.10:80 check
 ```
 
+## go through all sub-directories and render all templates
+
+Let's say we have path tree like
+
+```bash
+input> tree ftpls
+
+output>
+ftpls
+├── 1
+│   ├── 2
+│   │   └── index.html.ftpl
+│   └── index.html.ftpl
+└── index.html.ftpl
+```
+
+and then get real files by running
+
+```bash
+source faketpl.sh
+find ftpls/ -name "*.ftpl" | \
+while read fn; do \
+    ( faketpl < ${fn} > ${fn%%.ftpl} ); \
+done
+```
+
 ### More examples can be found in `examples/` directory.
 
