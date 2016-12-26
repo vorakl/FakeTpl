@@ -250,7 +250,7 @@ backend web_dyn
 
 ## go through all sub-directories and render all templates
 
-Let's say we have path tree like
+Let's say we have a path tree like
 
 ```bash
 input> tree ftpls
@@ -264,7 +264,7 @@ ftpls
 └── index.html.ftpl
 ```
 
-and then get real files by running
+to get real files just run
 
 ```bash
 source faketpl.sh
@@ -274,5 +274,5 @@ while read fn; do \
 done
 ```
 
-### More examples can be found in `examples/` directory.
+### more examples can be found in `examples/` directory.
 
