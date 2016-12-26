@@ -126,9 +126,11 @@ The idea, which made it possible to create faketpl, was found in [alterway/docke
 
 In the repo with [the official docker image of Nginx](https://github.com/nginxinc/docker-nginx) maintainers added a similar functionality of configuring Nginx using simple variables as templates. For this purpose they use `envsubst` tool from the `gettext` package. It works fine but supports substituting only simple variables like ${var}. There is no possibility to set default values like ${var:-defult} or use other features of a shell.
 
-The Authors of [HAProxy](http://www.haproxy.org/) included the same feature directly in the application. There is an ability to use environment variables inside the configuration files without need to run any external tools. That's really useful because you can inject them from the file before running the main process of HAProxy but it's limited only by using "flat" variables. There are no arrays, loops, etc. It's impossile, for instance, to build the whole config file with all backends from a little template. The example of how to do this using faketpl can be found below.
+The Authors of [HAProxy](http://www.haproxy.org/) included the same feature directly in the application. There is an ability to use environment variables inside the configuration files without a need to run any external tools. That's really useful because you can inject them from the file before running the main process of HAProxy but it's limited only by using "flat" variables. There are no arrays, loops, etc. It's impossile, for instance, to build the whole config file with all backends from a little template. The example of how to do this using faketpl can be found below.
 
-## Technical details?
+## Technical details
+
+Basically, it's as simple as go line by line trough the whole stream from stdin and print it out after the evaluation. That means if the shell can recognize some expressions they will be evaluated before printing out. To make this reading possible, the value of IFS variable is changed and this can screwed up you current running environment. That's why it's highly important to do all transformation in the sub-shell by putting the whole command in the parentheses. Another consequence is to use all desirable "templates" within one line. That's all. Only two requirement: to run insude `( )` and to write all expressions in one line.
 
 ## Examples
 
