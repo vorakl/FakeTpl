@@ -6,7 +6,7 @@ Table of Contents
 * [What is it?](#what-is-it)
 * [How to get started?](#how-to-get-started)
 * [Why was it created?](#why-was-it-created)
-* [Where is it used?](#where-is-it-used)
+* [Are there other similar solutions?](#are-there-other-similar-solutions)
 * [Technical details](#technical-details)
 * [Examples](#examples)
 
@@ -118,8 +118,15 @@ Actually, this is the most common case when you need to run in the container on 
 
 Of course, there are dozens of different template engines for many languages. It's not a big deal to install some scripting language, like Python, with template library and write a simple script. But! With containers the size matters ;) There is always a need to have a minimal image, without any unnecessary tools and the Shell is that reasonable minimum base which almost all containers have. Yes, there are templates engines in pure Bash but usually they support only simple traslation of variables (arrays) to their values, plus loops, but nothing more. So, you'll have to use some "dialect" of templates anyway. Honestly, this last option works pretty well. You can build a container image based on Alpine Linux with only Busybox inside, add one of a shell template engine and that's all. But suddenly, I came across a quite nice idea which opened a door to the full power of the shell that can be used as a sort of templates. Without any extra packages or additional syntax. Just pure shell one-liner in-lines and a simple function which tranlates them to values.
 
+## Are there other similar solutions?
 
-## Where is it used?
+Just a few examples... 
+
+The idea, which made it possible to create faketpl, was found in [alterway/docker-keepalived repo](https://github.com/alterway/docker-keepalived). That was exactly what I needed and was looking for. At the same time I didn't like the implementation. In my opinion, it has a big drawback because it's limited by the size of files. But it wasn't a goal for the guys and their solution works pretty good for them. Their implementation puts the whole file in the command line before the evaluation and that's why it's limited and depends on the system. Anyway, it won't allow to deal with files bigger than `getconf ARG_MAX` bytes. Although, I was needed a scalable solution.
+
+In the repo with [the official docker image of Nginx](https://github.com/nginxinc/docker-nginx) maintainers added a similar functionality of configuring Nginx using simple variables as templates. For this purpose they use `envsubst` tool from the `gettext` package. It works fine but supports substituting only simple variables like ${var}. There is no possibility to set default values like ${var:-defult} or use other features of a shell.
+
+The Authors of [HAProxy](http://www.haproxy.org/) included the same feature directly in the application. There is an ability to use environment variables inside the configuration files without need to run any external tools. That's really useful because you can inject them from the file before running the main process of HAProxy but it's limited only by using "flat" variables. There are no arrays, loops, etc. It's impossile, for instance, to build the whole config file with all backends from a little template. The example of how to do this using faketpl can be found below.
 
 ## Technical details?
 
