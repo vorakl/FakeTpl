@@ -5,8 +5,8 @@ Table of Contents
 
 * [What is it?](#what-is-it)
 * [How to get started?](#how-to-get-started)
-* [Where is it used?](#where-is-it-used)
 * [Why was it created?](#why-was-it-created)
+* [Where is it used?](#where-is-it-used)
 * [Technical details](#technical-details)
 * [Examples](#examples)
 
@@ -104,9 +104,23 @@ then, `index.html` will have this result
 </html>
 ```
 
-## Where is it used?
-
 ## Why was it created?
+
+I was looking for such kind solution for awhile and the reason is "12 Factors" of Cloud Native Applications with its 3rd statment [Store config in the environment](https://12factor.net/config). It basically says that an application has to be delivered with the configuration in most generic form, to make it's ready to be run in any specific environment without rebuilding or modifications of the base "package". It has to be done by supplying a configuration for a particular instance (copy of an application) for a particular environment in terms of environment variables. For example, if some orchestration system runs a container with an application, it supplies all needed configuration as environment variables. In case of Docker, it would look like
+
+```bash
+docker run -d -e RUN_ENV=dev -e UPLOAD_HOST=1.2.3.4 -e MY_DOMAIN=domain.com some-image-with-app
+```
+
+That basically means that something inside the container has to modify the configuration of an application, at a boot time,
+to make it applicable for the current running environment. This can be achived easyly if the application is developed in-house and it supports such kind of behavior. For most popular programming languages there are available a lot of libraries with different template engines. But what if it doesn't support templates or there is a need to run 3rd party application on which we don't have any influence?
+
+Actually, this is the most common case when you need to run in the container on the Cloud some arbitrary application which is delivered as a unified image. If this application has a configuration stored in text files, then one of possible and convenient way to support 3rd statment of the "12 Factors" is to deliver the application with the most generic form of configuration using templates. Then, at run-time, just finalize configuration based on supplied environment variables by using some template engine.
+
+Of course, there are dozens of different template engines for many languages. It's not a big deal to install some scripting language, like Python, with template library and write a simple script. But! With containers the size matters ;) There is always a need to have a minimal image, without any unnecessary tools and the Shell is that reasonable minimum base which almost all containers have. Yes, there are templates engines in pure Bash but usually they support only simple traslation of variables (arrays) to their values, plus loops, but nothing more. So, you'll have to use some "dialect" of templates anyway. Honestly, this last option works pretty well. You can build a container image based on Alpine Linux with only Busybox inside, add one of a shell template engine and that's all. But suddenly, I came across a quite nice idea which opened a door to the full power of the shell that can be used as a sort of templates. Without any extra packages or additional syntax. Just pure shell one-liner in-lines and a simple function which tranlates them to values.
+
+
+## Where is it used?
 
 ## Technical details?
 
