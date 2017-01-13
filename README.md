@@ -15,7 +15,7 @@ Table of Contents
 It's not a real template engine or a complete program.
 This is a working solution for a simple idea of using shell inlines as a templates.
 
-Of course, it won't be convenient to use this kinda "templates" with files where are a lot of quotation marks or other expressions sensitive to the shell syntax, because it leads to escaping all these special characters. But, at the same time it is convenient  for adding templates to any common configuration files and other similar cases, for which actually it did created.
+Of course, it won't be convenient to use this sort of "templates" with files where are a lot of quotation marks or other expressions sensitive to the shell syntax, because it leads to escaping all these special characters. But, at the same time it is convenient  for adding templates to any common configuration files and other similar cases, for which actually `faketpl` did created.
 
 The solutions is done as a little function which is called `faketpl`. It's compatible with many sh-like shells because uses only basic instructions, which can be included in any script, either as a one-liner or an external script (after downloading from the Internet). Faketpl was tested in Bourne shell (sh), bash, zsh and ash (Busybox).
 
