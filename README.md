@@ -39,7 +39,7 @@ Yep, that's only one line, really. Nothing more! :)
 Then, send a text with templates to stdin like:
 
 ```bash
-(echo -e "Workers $(grep processor /proc/cpuinfo | wc -l)\nVirtualHost $(cat /proc/sys/kernel/hostname):${RANDOM}\nUsername ${SRV_NAME:-www}" | faketpl)
+(echo -e 'Workers $(grep processor /proc/cpuinfo | wc -l)\nVirtualHost $(cat /proc/sys/kernel/hostname):${RANDOM}\nUsername ${SRV_NAME:-www}' | faketpl)
 ```
 
 If this command is run in a basic official docker container with Apline Linux with only Busybox on the board, then as a result, you'll see something like this
@@ -60,19 +60,19 @@ So, let's download the script from the Github (faketpl.vorakl.name is an alias t
 For a Busybox backend, run as root
 
 ```bash
-wget -qO /usr/bin/faketpl.sh http://faketpl.vorakl.name/faketpl.sh
+wget -qO /usr/bin/faketpl http://vorakl.github.io/FakeTpl/faketpl
 ```
 
 or using curl, run as root
 
 ```bash
-curl -sSLfo /usr/bin/faketpl.sh http://faketpl.vorakl.name/faketpl.sh
+curl -sSLfo /usr/bin/faketpl http://vorakl.github.io/FakeTpl/faketpl
 ```
 
 Then, include it in the script by `source` or `.` command without specifying a full path (because it's in the $PATH, in one of the standart directory for binaries)
 
 ```bash
-source faketpl.sh
+source faketpl
 ```
 
 and then, set some values for variables from our "template" file. To render the file, just send it to the function and write an output to a real file:
@@ -141,14 +141,14 @@ Basically, it's as simple as go line by line trough the whole stream from stdin 
 ### default values
 
 ```bash
-input> (echo "[${MYVAR:-default}]" | faketpl)
+input> (echo '[${MYVAR:-default}]' | faketpl)
 
 output>
 [default]
 ```
 
 ```bash
-input> (MYVAR=something; echo "[${MYVAR:-default}]" | faketpl)
+input> (MYVAR=something; echo '[${MYVAR:-default}]' | faketpl)
 
 output>
 [something]
@@ -159,22 +159,20 @@ output>
 To raise an error we need `set -u`
 
 ```bash
-input> (set -u; faketpl <<< "${ASD}") 2> /dev/null || { echo "Error: ASD variable has to be set"; exit 1; }
+input> (set -u; faketpl <<< '${ASD}') 2> /dev/null || { echo "Error: ASD variable has to be set"; exit 1; }
 
 output>
 Error: ASD variable has to be set
 ```
+or
 
+```bash
+(set -u; echo '${ASD}' | faketpl) 2> /dev/null || { echo "Error: ASD variable has to be set"; exit 1; }
+```
 or
 
 ```bash
 (set -u; faketpl < some.conf.ftpl > some.conf) 2> /dev/null || { echo "Error: ASD variable has to be set"; exit 1; }
-```
-
-but, if you use a pipeline, it requires to set one more option `set -o pipefail`
-
-```bash
-( set -uo pipefail; echo "${ASD}" | faketpl) 2> /dev/null || { echo "Error: ASD variable has to be set"; exit 1; }
 ```
 
 ### using arrays
@@ -269,7 +267,7 @@ ftpls
 to get real files just run
 
 ```bash
-source faketpl.sh
+source faketpl
 find ftpls/ -name "*.ftpl" | \
 while read fn; do \
     ( faketpl < ${fn} > ${fn%%.ftpl} ); \

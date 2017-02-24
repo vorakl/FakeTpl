@@ -3,7 +3,7 @@ FROM docker.io/haproxy:1.7-alpine
 # we need Bash for arrays
 RUN apk add --no-cache bash
 
-RUN wget -qP /usr/bin/ http://faketpl.vorakl.name/faketpl.sh
+RUN wget -qP /usr/bin/ http://vorakl.github.io/FakeTpl/faketpl
 
 COPY haproxy.cfg.ftpl /usr/local/etc/haproxy/
 COPY entrypoint.sh /

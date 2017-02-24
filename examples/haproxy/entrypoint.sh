@@ -3,7 +3,7 @@
 set -e
 
 # import faketpl function
-. faketpl.sh
+. faketpl
 
 # a trick to get arrays from the host's environment
 declare -A BACKEND
