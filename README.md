@@ -1,3 +1,5 @@
+[![Build Status](https://api.travis-ci.org/vorakl/FakeTpl.png)](https://travis-ci.org/vorakl/FakeTpl)
+
 # FakeTpl - a fake template engine in sh-compatible shells
 
 Table of Contents
