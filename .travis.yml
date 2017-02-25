@@ -7,6 +7,5 @@ before_script:
     - make
     - sudo make install
     - cd ..
-    - find .
 
 script: make test
