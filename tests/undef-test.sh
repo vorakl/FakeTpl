@@ -1,7 +1,5 @@
 #!/usr/bin/env roundup
 
-source ../faketpl
-
 describe "Checks if it fails on undefined variables"
 
 before() {

@@ -1,7 +1,5 @@
 #!/usr/bin/env roundup
 
-source ../faketpl
-
 describe "Checks different ways to invoke"
 
 before() {
