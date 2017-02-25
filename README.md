@@ -278,5 +278,5 @@ done
 
 ### more examples can be found in `examples/` directory.
 
-##### Version: 1.1.1
+##### Version: v1.1.2
 ##### Copyright (c) 2016 by Oleksii Tsvietnov, me@vorakl.name
