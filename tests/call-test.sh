@@ -13,16 +13,16 @@ after() {
 }
 
 it_gets_data_from_pipe() {
-    output=$( (self="FakeTpl"; echo 'I am $self' | faketpl) )
+    output=$(bash -c 'source faketpl; self="FakeTpl"; echo "I am \$self" | faketpl')
     test "${output}" = "I am FakeTpl"
 }
 
 it_gets_data_from_stdin() {
-    output=$( (self="FakeTpl"; faketpl <<< 'I am $self') )
+    output=$(bash -c 'source faketpl; self="FakeTpl"; faketpl <<< "I am \$self"')
     test "${output}" = "I am FakeTpl"
 }
 
 it_gets_data_from_file() {
-    output=$(bash -c 'source faketpl; self="FakeTpl"; faketpl < <(echo "I am \$self")' )
+    output=$(bash -c 'source faketpl; self="FakeTpl"; faketpl < <(echo "I am \$self")')
     test "${output}" = "I am FakeTpl"
 }
