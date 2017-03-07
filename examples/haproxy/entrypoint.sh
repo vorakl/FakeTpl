@@ -7,7 +7,9 @@ set -e
 
 # a trick to get arrays from the host's environment
 declare -A BACKEND
-eval BACKEND=$BACKEND
+if [[ -n "${BACKEND}" ]]; then
+    eval BACKEND=${BACKEND};
+fi
 
 (faketpl < /usr/local/etc/haproxy/haproxy.cfg.ftpl > /usr/local/etc/haproxy/haproxy.cfg)
 
