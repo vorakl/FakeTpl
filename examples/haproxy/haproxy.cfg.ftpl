@@ -21,5 +21,5 @@ frontend web
 
 backend web_dyn
    balance ${LB_ALG:-roundrobin}
-$(IFS=' '; for host in $(tr ' ' '\n' <<< ${!BACKEND[@]} | sort -n | tr '\n' ' '); do echo "   server ${host} ${BACKEND[${host}]}:80 check"; done)
+$(IFS=' '; for host in $(tr ' ' '\n' <<< ${!BACKENDS[@]} | sort -n | tr '\n' ' '); do echo "   server ${host} ${BACKENDS[${host}]}:80 check"; done)
 

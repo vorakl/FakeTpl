@@ -5,10 +5,10 @@ set -e
 # import faketpl function
 . faketpl
 
-# a trick to get arrays from the host's environment
-declare -A BACKEND
+# It takes scalar from environment and makes array from it
 if [[ -n "${BACKEND}" ]]; then
-    eval BACKEND=${BACKEND};
+    declare -A BACKENDS
+    eval BACKENDS=${BACKEND};
 fi
 
 (faketpl < /usr/local/etc/haproxy/haproxy.cfg.ftpl > /usr/local/etc/haproxy/haproxy.cfg)
