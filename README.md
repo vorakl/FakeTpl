@@ -169,5 +169,5 @@ In the repo with [the official docker image of Nginx](https://github.com/nginxin
 The Authors of [HAProxy](http://www.haproxy.org/) included the same feature directly in the application. There is an ability to use environment variables inside the configuration files without a need to run any external tools. That's really useful because you can inject them from the file before running the main process of HAProxy but it's limited only by using "flat" variables. There are no arrays, loops, etc. It's impossile, for instance, to build the whole config file with all backends from a little template. The example of how to do this using faketpl can be found below.
 
 
-##### Version: v1.1.2
+##### Version: 1.1.3
 ##### Copyright (c) 2016 by Oleksii Tsvietnov, me@vorakl.name
