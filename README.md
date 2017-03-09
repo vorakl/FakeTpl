@@ -6,13 +6,12 @@
 * [How to get started?](#how-to-get-started)
    * [...as a one-liner.](#as-a-one-liner)
    * [...as an included script.](#as-an-included-script)
-   * [Intallation to a docker image (based on CentOS)](#intallation-to-a-docker-image-based-on-centos)
-   * [Intallation to a docker image (based on Alpine)](#intallation-to-a-docker-image-based-on-alpine)
+   * [Intallation into a docker image (based on CentOS)](#intallation-into-a-docker-image-based-on-centos)
+   * [Intallation into a docker image (based on Alpine)](#intallation-into-a-docker-image-based-on-alpine)
+* [Examples](#examples)
+* [Technical details](#technical-details)
 * [Why was it created?](#why-was-it-created)
 * [Are there other similar solutions?](#are-there-other-similar-solutions)
-* [Technical details](#technical-details)
-* [Examples](#examples)
-
 
 ## What is it?
 
@@ -114,7 +113,7 @@ then, `index.html` will have this result
 </html>
 ```
 
-### Intallation to a docker image (based on CentOS)
+### Intallation into a docker image (based on CentOS)
 
 ```bash
 FROM centos:latest
@@ -124,7 +123,7 @@ RUN curl -sSLfo /usr/bin/faketpl http://vorakl.github.io/FakeTpl/faketpl && \
 
 ```
 
-### Intallation to a docker image (based on Alpine)
+### Intallation into a docker image (based on Alpine)
 
 ```bash
 FROM alpine:latest
@@ -132,6 +131,17 @@ FROM alpine:latest
 RUN wget -qP /usr/bin/ http://vorakl.github.io/FakeTpl/faketpl && \
     ( cd /usr/bin && wget -qO - http://vorakl.github.io/FakeTpl/faketpl.sha256 | sha256sum -c )
 ```
+
+## Examples
+
+* To get more familiar with basic technics I suggest to try [One-liners](https://github.com/vorakl/FakeTpl/tree/master/examples/one-liners) first
+* The example of [auto-configuring of HAProxy](https://github.com/vorakl/FakeTpl/tree/master/examples/haproxy) at run-time
+* The example of [generating of an Index page](https://github.com/vorakl/FakeTpl/tree/master/examples/nginx) using environment variables
+
+## Technical details
+
+Basically, it's as simple as go line by line trough the whole stream from stdin and print them out after the evaluation. That means if the shell can recognize some expressions they will be evaluated before printing out. To make this reading possible, the value of IFS variable is changed and this can screwed up you current running environment. That's why it's highly important to do all transformation in the sub-shell by putting the whole command in the parentheses. Another consequence is to use all desirable "templates" within one line. That's all. Only two requirement: to run inside `( )` and to write all expressions in one line.
+
 
 ## Why was it created?
 
@@ -158,149 +168,6 @@ In the repo with [the official docker image of Nginx](https://github.com/nginxin
 
 The Authors of [HAProxy](http://www.haproxy.org/) included the same feature directly in the application. There is an ability to use environment variables inside the configuration files without a need to run any external tools. That's really useful because you can inject them from the file before running the main process of HAProxy but it's limited only by using "flat" variables. There are no arrays, loops, etc. It's impossile, for instance, to build the whole config file with all backends from a little template. The example of how to do this using faketpl can be found below.
 
-## Technical details
-
-Basically, it's as simple as go line by line trough the whole stream from stdin and print it out after the evaluation. That means if the shell can recognize some expressions they will be evaluated before printing out. To make this reading possible, the value of IFS variable is changed and this can screwed up you current running environment. That's why it's highly important to do all transformation in the sub-shell by putting the whole command in the parentheses. Another consequence is to use all desirable "templates" within one line. That's all. Only two requirement: to run insude `( )` and to write all expressions in one line.
-
-## Examples
-
-### default values
-
-```bash
-input> (echo '[${MYVAR:-default}]' | faketpl)
-
-output>
-[default]
-```
-
-```bash
-input> (MYVAR=something; echo '[${MYVAR:-default}]' | faketpl)
-
-output>
-[something]
-```
-
-### if some variable wasn't set, then raise an error
-
-To raise an error we need `set -u`
-
-```bash
-input> (set -u; faketpl <<< '${ASD}') 2> /dev/null || { echo "Error: ASD variable has to be set"; exit 1; }
-
-output>
-Error: ASD variable has to be set
-```
-or
-
-```bash
-(set -u; echo '${ASD}' | faketpl) 2> /dev/null || { echo "Error: ASD variable has to be set"; exit 1; }
-```
-or
-
-```bash
-(set -u; faketpl < some.conf.ftpl > some.conf) 2> /dev/null || { echo "Error: ASD variable has to be set"; exit 1; }
-```
-
-### using arrays
-
-To use arrays we need a shell that supports them, like Bash. Don't forget to declare an array as `declare -a VAR` first, especially if it's an associative array as `declare -A var`.
-
-Let's make a template `haproxy.cfg.ftpl` of a config file for HAProxy
-
-```bash
-global
-    log /host-journal/dev-log local0
-    maxconn ${MAXCONN:-2000}
-    stats socket /tmp/haproxy.sock
-
-defaults
-    log     global
-    mode    http
-    option  httplog
-    option  dontlognull
-    retries 3
-    option  redispatch
-    option  forwardfor
-    timeout connect ${TIMEOUT_CONNECT:-5000}
-    timeout client  ${TIMEOUT_CLIENT:-10000}
-    timeout server  ${TIMEOUT_SERVER:-10000}
-
-frontend web
-    bind    :80
-    default_backend web_dyn
-
-backend web_dyn
-   balance ${LB_ALG:-roundrobin}
-$(IFS=' '; for host in $(tr ' ' '\n' <<< ${!BACKEND[@]} | sort -n | tr '\n' ' '); do echo "   server ${host} ${BACKEND[${host}]}:80 check"; done)
-```
-
-Then we can get a particular configuration for this instance like
-
-```bash
-declare -A BACKEND
-export BACKEND=([web1]=192.168.1.10 [web2]=192.168.2.10 [web3]=192.168.3.10)
-export TIMEOUT_SERVER=15000
-(faketpl < haproxy.cfg.ftpl > haproxy.cfg)
-```
-
-then in the `haproxy.cfg` we'll see
-
-```bash
-global
-    log /host-journal/dev-log local0
-    maxconn 2000
-    stats socket /tmp/haproxy.sock
-
-defaults
-    log     global
-    mode    http
-    option  httplog
-    option  dontlognull
-    retries 3
-    option  redispatch
-    option  forwardfor
-    timeout connect 5000
-    timeout client  10000
-    timeout server  15000
-
-frontend web
-    bind    :80
-    default_backend web_dyn
-
-backend web_dyn
-   balance roundrobin
-   server web1 192.168.1.10:80 check
-   server web2 192.168.2.10:80 check
-   server web3 192.168.3.10:80 check
-```
-
-## go through all sub-directories and render all templates
-
-Let's say we have a path tree like
-
-```bash
-input> tree ftpls
-
-output>
-ftpls
-├── 1
-│   ├── 2
-│   │   └── index.html.ftpl
-│   └── index.html.ftpl
-└── index.html.ftpl
-```
-
-to get real files just run
-
-```bash
-source faketpl
-find ftpls/ -name "*.ftpl" | \
-while read fn; do \
-    ( faketpl < ${fn} > ${fn%%.ftpl} ); \
-done
-```
-
-### more examples can be found in `examples/` directory.
 
 ##### Version: v1.1.2
 ##### Copyright (c) 2016 by Oleksii Tsvietnov, me@vorakl.name

@@ -1,4 +1,4 @@
-# The example of docker image based on an official Nginx's image
+# The example of generating of an Index page using environment variables
 
 ## Build
 
@@ -11,11 +11,9 @@ docker build -t nginx-test .
 ## Start the container without changing variables
 
 ```bash
-input> docker run -d --name nginx-test -p 80:80 nginx-test
-input> curl http://localhost/
+$ docker run -d --name nginx-test -p 80:80 nginx-test
 
-output>
-
+$ curl http://localhost/
 <!DOCTYPE html>
 <html>
     <body>
@@ -25,17 +23,15 @@ output>
     </body>
 </html>
 
-input> docker rm -f nginx-test
+$ docker rm -f nginx-test
 ```
 
 ## Start the container and change the variable
 
 ```bash
-input> docker run -d --name nginx-test -e MYNAME=Oleksii -p 80:80 nginx-test
-input> curl http://localhost/
+$ docker run -d --name nginx-test -e MYNAME=Oleksii -p 80:80 nginx-test
 
-output>
-
+$ curl http://localhost/
 <!DOCTYPE html>
 <html>
     <body>
@@ -45,6 +41,6 @@ output>
     </body>
 </html>
 
-input> docker rm -f nginx-test
+$ docker rm -f nginx-test
 ```
 
