@@ -1,27 +1,29 @@
 [![Build Status](https://api.travis-ci.org/vorakl/FakeTpl.png)](https://travis-ci.org/vorakl/FakeTpl)
 
-# FakeTpl - a fake template engine in sh-compatible shells
-
-Table of Contents
-=================
+# FakeTpl - the fake template engine in sh-compatible shells
 
 * [What is it?](#what-is-it)
 * [How to get started?](#how-to-get-started)
+   * [...as a one-liner.](#as-a-one-liner)
+   * [...as an included script.](#as-an-included-script)
+   * [Intallation to a docker image (based on CentOS)](#intallation-to-a-docker-image-based-on-centos)
+   * [Intallation to a docker image (based on Alpine)](#intallation-to-a-docker-image-based-on-alpine)
 * [Why was it created?](#why-was-it-created)
 * [Are there other similar solutions?](#are-there-other-similar-solutions)
 * [Technical details](#technical-details)
 * [Examples](#examples)
 
+
 ## What is it?
 
 It's not a real template engine or a complete program.
-This is a working solution for a simple idea of using shell inlines as a templates.
+This is a working solution for a simple idea of using shell inlines as templates.
 
-Of course, it won't be convenient to use this sort of "templates" with files where are a lot of quotation marks or other expressions sensitive to the shell syntax, because it leads to escaping all these special characters. But, at the same time it is convenient  for adding templates to any common configuration files and other similar cases, for which actually `faketpl` did created.
+Of course, it won't be convenient to use this sort of "templates" with files where are a lot of quotation marks or other expressions sensitive to the shell syntax, because it leads to escaping all these special characters. But, at the same time it is convenient for adding templates to any common configuration files and other similar cases, for which actually `faketpl` was created.
 
-The solutions is done as a little function which is called `faketpl`. It's compatible with many sh-like shells because uses only basic instructions, which can be included in any script, either as a one-liner or an external script (after downloading from the Internet). Faketpl was tested in Bourne shell (sh), bash, zsh and ash (Busybox).
+The solution is done as a little function which is called `faketpl`. It's compatible with many sh-like shells because uses only basic instructions, which can be included in any script, either as a one-liner or an external script (after downloading from the Internet). Faketpl was tested in Bourne shell (sh), bash, zsh and ash (Busybox).
 
-Being so simple in terms of the idea and realization, it's, in most cases, much more powerful than real template engines! It allows to use most features of a shell interpreter as templates with the only limitation of writing them in one line. That means, there are conditions, loops, a result of executing commands, content of files, etc and the only real dependency is a shell.
+Being so simple in terms of the idea and realization, it's, in most cases, much more powerful than real template engines! It allows to use most features of a shell interpreter as templates with the only limitation of writing them in one line. That means, there are conditions, loops, an output result of executing commands, content of files, etc and the only real dependency is a shell.
 
 To eliminate any security issues related to direct executing commands, this solution is meant to be used primarily in the isolated container's environment like Docker and especially for bootstrapping them.
 
@@ -31,14 +33,14 @@ Being compatible with many shells at the same time, faketpl cannot use one of th
 
 ### ...as a one-liner.
 
-This is the simplest and the most reliable one. It doesn't require an internet connection but will be hard-coded once it's added. That defines a use case: when you need to integrate the fake engine with some existing script/environment once and e then it without any requirements. So, just put this string in your shell code:
+This is the simplest and the most reliable one. It doesn't require an internet connection but will be hard-coded once it's added. That defines a use case: when you need to integrate the fake template engine with some existing script/environment once and then use it without any requirements. So, just add this string in your shell code:
 
 ```bash
 faketpl() { export IFS=''; while read -r _line; do eval echo \"${_line}\"; done; }
 ```
 
 Yep, that's only one line, really. Nothing more! :)
-Then, send a text with templates to stdin like:
+Then, send a text with templates to stdin like here
 
 ```bash
 (echo -e 'Workers $(grep processor /proc/cpuinfo | wc -l)\nVirtualHost $(cat /proc/sys/kernel/hostname):${RANDOM}\nUsername ${SRV_NAME:-www}' | faketpl)
@@ -52,26 +54,29 @@ VirtualHost 1a614d65b09c:10915
 Username www
 ```
 
-That could be a part of some sort of dynamic config file of a web-server, right? Of course, more useful examples can be found below ;) And pay attention on using bounding parentheses! They are always needed. The explanation "why?" will be given a bit later.
+That could be a part of some sort of dynamic config file of a web-server. Of course, more useful examples can be found below ;) And pay attention on using bounding parentheses! They are always needed. The explanation "why?" will be given a bit later.
 
 ### ...as an included script.
 
 The use case for this option is to use it in automated build environments, when you build an application from scratch. For example, while your pipeline builds a new docker image with some application, faketpl can be downloaded from the Internet by the instruction from a Dockerfile and then be invoked at run-time from the Entrypoint to transform templates to real configuration files, or html pages, or whatever else. As I've mentioned before, to support several backends (shells) at the same time, faketpl can be used only after "sourcing" it in the script and then being used as a function. 
-So, let's download the script from the Github (faketpl.vorakl.name is an alias to the Github).
+So, let's download the script from the Github and check sha256 sum.
+You DON'T need to set an execution permission!
 
 For a Busybox backend, run as root
 
 ```bash
-wget -qO /usr/bin/faketpl http://vorakl.github.io/FakeTpl/faketpl
+wget -qO /usr/bin/faketpl http://vorakl.github.io/FakeTpl/faketpl && \
+( cd /usr/bin && wget -qO - http://vorakl.github.io/FakeTpl/faketpl.sha256 | sha256sum -c )
 ```
 
 or using curl, run as root
 
 ```bash
-curl -sSLfo /usr/bin/faketpl http://vorakl.github.io/FakeTpl/faketpl
+curl -sSLfo /usr/bin/faketpl http://vorakl.github.io/FakeTpl/faketpl && \
+( cd /usr/bin && curl -sSLf http://vorakl.github.io/FakeTpl/faketpl.sha256 | sha256sum -c )
 ```
 
-Then, include it in the script by `source` or `.` command without specifying a full path (because it's in the $PATH, in one of the standart directory for binaries)
+Then, include it in the script by `source` or `.` command without specifying a full path (because it's already in the $PATH, in one of the standart directory for binaries)
 
 ```bash
 source faketpl
@@ -107,6 +112,25 @@ then, `index.html` will have this result
         <div>Random number: <b>20812</b></div>
     </body>
 </html>
+```
+
+### Intallation to a docker image (based on CentOS)
+
+```bash
+FROM centos:latest
+
+RUN curl -sSLfo /usr/bin/faketpl http://vorakl.github.io/FakeTpl/faketpl && \
+    ( cd /usr/bin && curl -sSLf http://vorakl.github.io/FakeTpl/faketpl.sha256 | sha256sum -c )
+
+```
+
+### Intallation to a docker image (based on Alpine)
+
+```bash
+FROM alpine:latest
+
+RUN wget -qP /usr/bin/ http://vorakl.github.io/FakeTpl/faketpl && \
+    ( cd /usr/bin && wget -qO - http://vorakl.github.io/FakeTpl/faketpl.sha256 | sha256sum -c )
 ```
 
 ## Why was it created?
