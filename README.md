@@ -134,7 +134,7 @@ RUN wget -qP /usr/bin/ http://vorakl.github.io/FakeTpl/faketpl && \
 
 ## Examples
 
-* To get more familiar with basic technics I suggest to try [One-liners](https://github.com/vorakl/FakeTpl/tree/master/examples/one-liners) first
+* To get more familiar with basic technics I suggest to try [one-liners](https://github.com/vorakl/FakeTpl/tree/master/examples/one-liners) first
 * The example of [auto-configuring of HAProxy](https://github.com/vorakl/FakeTpl/tree/master/examples/haproxy) at run-time
 * The example of [generating of an Index page](https://github.com/vorakl/FakeTpl/tree/master/examples/nginx) using environment variables
 
@@ -158,7 +158,7 @@ Actually, this is the most common case when you need to run in the container on 
 
 Of course, there are dozens of different template engines for many languages. It's not a big deal to install some scripting language, like Python, with template library and write a simple script. But! With containers the size matters ;) There is always a need to have a minimal image, without any unnecessary tools and the Shell is that reasonable minimum base which almost all containers have. Yes, there are templates engines in pure Bash but usually they support only simple traslation of variables (arrays) to their values, plus loops, but nothing more. So, you'll have to use some "dialect" of templates anyway. Honestly, this last option works pretty well. You can build a container image based on Alpine Linux with only Busybox inside, add one of a shell template engine and that's all. But suddenly, I came across a quite nice idea which opened a door to the full power of the shell that can be used as a sort of templates. Without any extra packages or additional syntax. Just pure shell one-liner in-lines and a simple function which tranlates them to values.
 
-## Are there other similar solutions?
+## Are there any other similar solutions?
 
 Just a few examples... 
 
