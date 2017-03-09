@@ -11,7 +11,7 @@
 * [Examples](#examples)
 * [Technical details](#technical-details)
 * [Why was it created?](#why-was-it-created)
-* [Are there other similar solutions?](#are-there-other-similar-solutions)
+* [Are there any other similar solutions?](#are-there-any-other-similar-solutions)
 
 ## What is it?
 
