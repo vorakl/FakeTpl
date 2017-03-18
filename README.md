@@ -134,7 +134,7 @@ RUN wget -qP /usr/bin/ http://vorakl.github.io/FakeTpl/faketpl && \
 
 ## Examples
 
-I prepared a few [examples](https://github.com/vorakl/FakeTpl/tree/master/examples) and suggest to start [one-liners](https://github.com/vorakl/FakeTpl/tree/master/examples/one-liners) first to get more familiar with basic technics
+I prepared a few [examples](https://github.com/vorakl/FakeTpl/tree/master/examples) and suggest to start from [one-liners](https://github.com/vorakl/FakeTpl/tree/master/examples/one-liners) to get more familiar with basic technics
 
 ## Technical details
 
