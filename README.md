@@ -64,15 +64,15 @@ You DON'T need to set an execution permission!
 For a Busybox backend, run as root
 
 ```bash
-wget -qO /usr/bin/faketpl http://vorakl.github.io/FakeTpl/faketpl && \
-( cd /usr/bin && wget -qO - http://vorakl.github.io/FakeTpl/faketpl.sha256 | sha256sum -c )
+wget -qO /usr/bin/faketpl http://faketpl.vorakl.name/faketpl && \
+( cd /usr/bin && wget -qO - http://faketpl.vorakl.name/faketpl.sha256 | sha256sum -c )
 ```
 
 or using curl, run as root
 
 ```bash
-curl -sSLfo /usr/bin/faketpl http://vorakl.github.io/FakeTpl/faketpl && \
-( cd /usr/bin && curl -sSLf http://vorakl.github.io/FakeTpl/faketpl.sha256 | sha256sum -c )
+curl -sSLfo /usr/bin/faketpl http://faketpl.vorakl.name/faketpl && \
+( cd /usr/bin && curl -sSLf http://faketpl.vorakl.name/faketpl.sha256 | sha256sum -c )
 ```
 
 Then, include it in the script by `source` or `.` command without specifying a full path (because it's already in the $PATH, in one of the standart directory for binaries)
@@ -118,8 +118,8 @@ then, `index.html` will have this result
 ```bash
 FROM centos:latest
 
-RUN curl -sSLfo /usr/bin/faketpl http://vorakl.github.io/FakeTpl/faketpl && \
-    ( cd /usr/bin && curl -sSLf http://vorakl.github.io/FakeTpl/faketpl.sha256 | sha256sum -c )
+RUN curl -sSLfo /usr/bin/faketpl http://faketpl.vorakl.name/faketpl && \
+    ( cd /usr/bin && curl -sSLf http://faketpl.vorakl.name/faketpl.sha256 | sha256sum -c )
 
 ```
 
@@ -128,8 +128,8 @@ RUN curl -sSLfo /usr/bin/faketpl http://vorakl.github.io/FakeTpl/faketpl && \
 ```bash
 FROM alpine:latest
 
-RUN wget -qP /usr/bin/ http://vorakl.github.io/FakeTpl/faketpl && \
-    ( cd /usr/bin && wget -qO - http://vorakl.github.io/FakeTpl/faketpl.sha256 | sha256sum -c )
+RUN wget -qP /usr/bin/  && http://faketpl.vorakl.name/faketpl
+    ( cd /usr/bin && wget -qO - http://faketpl.vorakl.name/faketpl.sha256 | sha256sum -c )
 ```
 
 ## Examples
