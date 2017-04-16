@@ -1,0 +1,86 @@
+{% if DISPLAY_SITE_ON_SIDEBAR|default("true") %}
+<div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+    <ul class="nav nav-list">
+        <li class="nav-header"> 
+        Site
+        </li>
+
+        {% if DISPLAY_ARCHIVES_ON_SIDEBAR|default("true") %}
+        <li><a href="{{ SITEURL }}/{{ ARCHIVES_URL }}"><img class="iconmenu" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAn1BMVEVHcEzuQyFDqUP/dlSpu8z////d7v+pqanuQyHMIQCH7oeampqFhYVUu1S7dmWpqallmMz3XTv1WTfu7u6YzP/MzMzdMhDVh392dnbbMA7vRiTTe2/YLQvVKgjSaVnp9P/kORfk8f/RJgR3qt7u9v/QVD/g7/9votbOIwHWKwnz+f9/suXNLQ5pnNDPPyXMIQD4/P+Guu38/v+UyPuOwvXUfcTEAAAACnRSTlMA////////gL+/p4E1rgAAAJNJREFUeAFNygMOxAAUhOF6rdq2df+z7dT9i0m+PAJdPpfToIfw2Add9af05H8/HqNfAS79Vt80msYFZKTIfsm1DNCkvmVqsqyZlp82AJE9JQKGnqKoF15MPwDGlrrfX/NLtSOgy5m9vAMUIcOy6xsWgMA5LpwAkHjHhZcAqvi4iCvAlzv1BdzKOrINRTHsqC5vxB8wAwzldAteLAAAAABJRU5ErkJggg==" alt="[archives]"/>Archives</a></li>
+        {% endif %}
+
+        {% if DISPLAY_CATEGORIES_ON_SIDEBAR|default("true") %}
+        <li><a href="{{ SITEURL }}/{{ CATEGORIES_URL }}"><img class="iconmenu" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAflBMVEVHcEzMmGXKlmPy0bL/5czHk2Dvzqz84cfHk2DEkF353MDAjFn11re7h1Twzq7jvJe3g1Drx6Peto7Jm2+yf0zy0rLlv5jClWjgt42uekepdkPbsIOkcT7Wp3qgbTrSoXGdajfPnGqaZzSYZTKbaDWeaziibzyndEGreEWwfEnOm7M9AAAAJHRSTlMA/////////7///////////////////////////////////7/uB1ikAAAAW0lEQVR4AYXNpQEDURBF0fs+6pAP9F9TfLCCZeY9angEopDREEaCLEvbglc90YxY58RQ5sxKQSkVOas6z6hE56jYQCV19k/pSPvFXva/7BaeDN30UOXNJaswlQOK2Bmf70dgXAAAAABJRU5ErkJggg==" alt="[categories]" />Categories</a></li>
+        {% endif %}
+
+        {% if DISPLAY_TAGS_ON_SIDEBAR|default("true") %}
+        <li><a href="{{ SITEURL }}/{{ TAGS_URL }}"><img class="iconmenu" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABaUlEQVR4AY2TA7IeQRRGexMpZxnZQryM2LZt27Zt27Ztc3TyTvymfk3Vufi+W6PuDtNOsbcKcuyt065hqIQw5URK/nr8IUO9ohtMPBqRZrDh1BMaTzuF2f7huwy9sjcYd+grcQpmhT+93Hub/tWLEUbv/8S3BA7ejbA224vcfp2gXvQGw3e/23vjZczniGowLSDW+lVzFLyBYfD2V1x9FvHhG0g0MZDtaYBYq+k7V/AG0n/zMy4++c6bL/BxVCDZ1QBONTbbq+vjXMEbSK91Dzn76BsvPsOLgYFobS3YXcdsr66PcwVvIN1W3uXk/a88/Qj3ewS+zqoBS2ua7dX1ca7gDaTT0pscu/uFR+/hWvvA5zH+0F/ZXl3fuaLr227hVQ7f/sz9d3C+RfA/iLWaHs44XJTW8y5x8OYn7r71fwaxVkMv9wmFaTH7PPtufOT2G8QatcI/sQhNZ5xh3/WPgnV+GSvCgyZ5/QeQVjev4io8YwAAAABJRU5ErkJggg==" alt="[tags]" />Tags</a></li>
+        {% endif %}
+
+        {% if DISPLAY_PAGES_ON_SIDEBAR|default("true") %}
+        <li><a href="{{ SITEURL }}/{{ PAGES_URL }}"><img class="iconmenu" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABLElEQVR4AY2Sg3LoQBiF77Nd6zFq27Zt27Zt27ZtnebU7U46ycxJsvt/+83qyy+D/w+J6EF9wgCQPQZUzgAtS0DP2mP4L9VB7mNefsK6bvHZQ4Gq9JIVBLdf4fYOsqEAECUvPwEt57i+hWzsi9c4+CWCwLfxBJc3UBSygsCz9gBnV8C3zG/gt2d2D+0Tm6gfWER5xyTyGwaRWd0D1sgKAtfKHRxfQlHICgLH0g0cnIMz4Fd2BqyRFQQ2BcvYOYOikBUEFtnz2DwBZ8Cv7AxYIysITNKnsXYMRSErCAySx7F8CM6AX9kZsEZWEOgmjGDxAIpCVhBoxQ5ifh+cAb+yM2CNrCBQj+qDNEZRyAoC6X7X68UNwDpjDF4lMwivXUJiyxoY/rOPNTJkn8fdA17l2BuZn2c5AAAAAElFTkSuQmCC" alt="[pages]" />Pages</a></li>
+        {% endif %}
+
+        {% if DISPLAY_AUTHORS_ON_SIDEBAR|default("true") %}
+        <li><a href="{{ SITEURL }}/{{ AUTHORS_URL }}"><img class="iconmenu" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABPklEQVR4AZWSA2jFcRzE/9nLxpTdbHsLs72HOGYtDVkP+eWajTTm2bbNMN1+1/bs6tP/uu/dPUrJdRk2kcn8JgQg1PZyNs28PN8JASyYcGkgNtYjRgA90Mr0msQ4HfDzkyYE0AM86DWZcGUARCvzA18duASfet+Vgf/ivin0XB94as/D58kQgFVCTc/5AGR/XxiDu02xAOYINT3ewIzVwGdlZYwA32o1fy4GcZ6RgTmZH6GmxxszYJYdw8B7cfHEV18fMDfHPw2DQGsrX41Q0+ONGTDLjmHgPjsbmJ3VwyCfDj122JXE2/O6KioCxsfdgh12pYOEhJiLsjKgs9Mt2GFX2oiIqLtSKgGdzi3YYVdaCgpqvlIoAK3WLdhhV5rz84sRgCyFhWEjMRF7WVk4KS3FhUxGqOnxxgyzemJ+ARu8JzsIaZjBAAAAAElFTkSuQmCC" alt="[authors]" />Authors</a></li>
+        {% endif %}
+
+        {% if DISPLAY_SUBSCRIBES_ON_SIDEBAR|default("true") %}
+            {% if FEED_ALL_ATOM %}
+            <li><a href="{{ FEED_DOMAIN }}/{{ FEED_ALL_ATOM }}" rel="alternate"><img class="iconmenu" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAB2ElEQVR4AaWTA5AcURiE5y62bZtlOy7Gtm3btm3bPNu2ba0Hnengxby/qqt6//d17+5A6rtgUKkkTP72mg4Fu+qgaG99lBxqAuPR5jCfaAWKnjuekSH7TUHu1hoOpuOtgJu9/0pkmREFmRurQ7veEzjfETjR6rciQ5YZUZC2rhrUK92gHmsBqApQlAgt5hE0h2VQz/fi/huRZUYUJK6sAvliZ1j1/6n4HIQaeQdafiw4avxLyPeH80yILDOiIHZpZVjPdYBxX4NvZH29CGpOONQMf1huDxF7ssyIgogFFWE+1QaFO2sDihVKmjfMzltQfKInDHdGQMkOgy3mGYoOtwMZssyIguDZFWDS/1vu1uowue+FLf4tOJbQm8g/0hWGZ3PBKXk6G2TIMiMK/KaVg0H/bxkbKgkVv1j6MfRuPT9Dzo2GWS+kJ8uMKPCaVBbF+xsiZU05KAVJKHi2iB7mmNewJnvQwxh4BXJeHD1ZMCMKXMfao3BPPSSssANHLkikR6Hjdmiy5aN/twWaKtOTBTOiwGmUHQr0i5O+viLilkm/FRmyzIiCt8Mkh/D5FfmM/5XIMiMKqNdDJAeHERLcxtnDZ0pZBM0qj7B5FSl67ngGMmS/fRtLofdMUk3gzHxD5AAAAABJRU5ErkJggg==" alt="[rss]" />RSS feed</a></li>
+            {% endif %}
+            {% if FEED_EMAIL %}
+            <li><a href="{{ FEED_EMAIL }}"><img class="iconmenu" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABF0lEQVR4AcWTA2+0YRREn7/02bZt20Zt27Ztxduotm3bbqed2kaSk53cO2dfiws/r26Ijf8BrN9J4PAVcP8PBKoAUQZAtA0Q6wok+RBmzrhjh13QoSuGLF4zAGhZE3Toij6T50CSNwcAmlYFu3Toik79RwDqgCRPLpiXhR12memKFq27AKoAkuSOasUrzIvCHTvMhK6oU7kOoHSGJBckvdvNPAfOuJs9oysq5S8BKCRk8ihOFObAGXezu3RF8f8zAHIIr28mJznMZtEOXZH36ziADC74uwpmunRF5tdDk4OUNUGHrkj9uA9A0rqgK8ZukCT122FkSJ9DjvotFJq+QKnTV1T6SqEmTIkwc8YdO+yCDt2d/xpHAfBe0adnP0QCAAAAAElFTkSuQmCC" alt="[mail]" />Subscribe by Email</a></li>
+            {% endif %}
+        {% endif %}
+    </ul>
+</div>
+{% endif %}
+
+{% if DISPLAY_LINKS_ON_SIDEBAR|default("true") %}
+    {% if categories %}
+    <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+    <ul class="nav nav-list">
+        <li class="nav-header"> 
+        Links
+        </li>
+        
+        {% for title, link in LINKS %}
+        <li><a href="{{ link }}">{{ title }}</a></li>
+        {% endfor %}                   
+    </ul>
+    </div>
+    {% endif %}
+{% endif %}
+
+{% if DISPLAY_CATEGORIES_ON_SIDEBAR|default("true") %}
+    {% if categories %}
+    <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+    <ul class="nav nav-list">
+        <li class="nav-header"> 
+        Categories
+        </li>
+        
+        {% for cat, null in categories %}
+        <li><a href="{{ SITEURL }}/{{ cat.url }}">{{ cat }}</a></li>
+        {% endfor %}                   
+    </ul>
+    </div>
+    {% endif %}
+{% endif %}
+
+{% if DISPLAY_TAGS_ON_SIDEBAR|default("true") %}
+    {% if tags %}
+    <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+    <ul class="nav nav-list">
+        <li class="nav-header"> 
+        Tags
+        </li>
+        
+        {% for tag, null in tags|sort %}
+        <li><a href="{{ SITEURL }}/{{ tag.url }}">{{ tag }}</a></li>
+        {% endfor %}                   
+    </ul>
+    </div>
+    {% endif %}
+{% endif %}

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="{{ DEFAULT_LANG }}">
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}{{ SITENAME }} :: {{ SITEDESC }}{% endblock %}</title>
+    <meta name="description" content="{{ SITEDESC }}">
+    <meta name="author" content="{{ AUTHOR }}">
+    <meta name="keywords" content="{{ SITE_KEYWORDS }}">
+    <meta name="robots" content="index,follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--[if lt IE 9]>
+    <script src="{{ SITEURL }}/theme/html5.js?v={{ SITE_VERSION }}"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" href="{{ SITEURL }}/theme/bootstrap-pygments.bundle.min.css?v={{ SITE_VERSION }}">
+    {% if FEED_ALL_ATOM %}
+        <link rel="alternate" type="application/atom+xml" href="{{ FEED_DOMAIN }}/{{ FEED_ALL_ATOM }}" title="{{ SITENAME }}">
+    {% endif %}
+
+    <!-- favicons -->
+    <link rel="shortcut icon" href="/favicon.ico?v={{ SITE_VERSION }}">
+    <meta name="apple-mobile-web-app-title" content="{{ SITENAME }}">
+    <meta name="application-name" content="{{ SITENAME }}">
+</head>
+
+<body>
+
+{% if DISPLAY_MENU|default("true") %}
+<div class="navbar">
+    <div class="navbar-inner">
+    <div class="container">
+        {% include "topmenu.html" %}
+    </div>
+    </div>
+</div>
+{% endif %}
+
+<div class="container">
+    <div class="content">
+    <div class="row">
+        <div{% if DISPLAY_SIDEBAR|default("true") %} class="span9"{% else %} class="span12"{% endif %}>
+            {% block content_title %}{% endblock %}
+            {% block content %}{% endblock %}
+        </div>
+
+        {% if DISPLAY_SIDEBAR|default("true") %}                
+            <div class="span3">
+                {% include "sidebar.html" %}
+            </div>
+        {% endif %}
+    </div>
+    </div>
+
+    <footer>
+        <br />
+        {% if articles %}
+           {% set copy_date1 = articles[0].date.strftime('%Y') %}
+           {% set copy_dateN = articles[-1].date.strftime('%Y') %}
+           {% if copy_dateN == copy_date1 %}
+                {% set copy_date = copy_date1 %}
+           {% else %}
+                {% set copy_date = copy_dateN + '-' + copy_date1 %}
+           {% endif %}
+        {% else %}
+           {% set copy_date = '' %}
+        {% endif %}
+
+        <p>
+            <span class="pull-left">
+                <a href="{{ SITEURL }}/">{{ SITENAME }}</a> &copy; {{ copy_date }} <a href="{{ CONTACT_URL|default("#") }}">{{ AUTHOR }}</a>
+            </span>
+            <span class="pull-right">
+                Powered by <a href="https://github.com/getpelican/pelican">Pelican</a> and <a href="https://github.com/vorakl/aves">Aves</a> theme
+            </span>
+        </p>
+    </footer>
+</div>
+
+<script src="{{ SITEURL }}/theme/jquery-bootstrap-collapse.bundle.min.js?v={{ SITE_VERSION }}"></script>
+{% include "analytics.html" %}
+</body>
+</html>

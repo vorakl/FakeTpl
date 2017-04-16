@@ -1,0 +1,31 @@
+<a class="brand" href="{{ SITEURL }}/">{{ SITENAME }}</a>
+
+<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+</a>
+
+<div class="nav-collapse">
+    <ul class="nav pull-right">
+        {% if DISPLAY_CATEGORIES_ON_MENU|default("true") %}
+            {% for category, null in categories %}
+                <li><a href="{{ SITEURL }}/{{ category.url }}">{{ category }}</a></li>
+            {% endfor %}
+        {% endif %}
+
+        <!-- <li class="divider-vertical"></li> -->
+        {% if DISPLAY_ITEMS_ON_MENU|default("true") %}
+            {% for title, link in MENUITEMS %}
+                <li><a href="{{ link }}">{{ title }}</a></li>
+            {% endfor %}
+        {% endif %}
+
+        <!-- <li class="divider-vertical"></li> -->
+        {% if DISPLAY_PAGES_ON_MENU|default("true") %}
+            {% for page in pages %}
+                <li><a href="{{ SITEURL }}/{{ page.url }}">{{ page.slug }}</a></li>
+            {% endfor %}
+        {% endif %}
+    </ul>
+</div>

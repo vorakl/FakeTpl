@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}{{ SITENAME }} :: {{ page.title }}{% endblock %}
+
+{% block content %}        
+<div class="article">
+    <div class="content-title">
+        <h1>{{ page.title }}</h1>
+        {% if page.translations %}
+            <a href="{{ SITEURL }}/{{ page.url }}" class="btn btn-info xsmall">{{ page.lang or DEFAULT_LANG }}</a>
+            {% for translation in page.translations %}
+                <a href="{{ SITEURL }}/{{ translation.url }}" class="btn btn-info xsmall">{{ translation.lang }}</a>&nbsp;
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <div>{{ page.content }}</div>
+</div>
+{% endblock %}

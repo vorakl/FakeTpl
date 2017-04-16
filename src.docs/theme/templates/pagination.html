@@ -1,0 +1,41 @@
+<div class="pagination">
+<ul>
+{% if articles_page.has_previous() %}
+    {% set num = articles_page.previous_page_number() %}
+    <li class="prev"><a href="{{ SITEURL }}/{{ page_name|replace("index", "") }}{{ 'p' ~ num ~ '/' if num > 1 else '' }}">&larr;</a></li>
+{% else %}
+    <li class="prev disabled"><a href="#">&larr;</a></li>
+{% endif %}
+
+{% if articles_paginator.num_pages <= 5 %}
+    {% for num in range( 1, 1 + articles_paginator.num_pages ) %}
+        <li class="{{ 'active' if num == articles_page.number else '' }}"><a href="{{ SITEURL }}/{{ page_name|replace("index", "") }}{{ 'p' ~ num ~ '/' if num > 1 else '' }}">{{ num }}</a></li>
+    {% endfor %}
+{% else %}
+        {% set num = articles_page.number %}
+        {% if num >=1 and num <= 3 %}
+            {% for num in range(1, 5) %}
+                <li class="{{ 'active' if num == articles_page.number else '' }}"><a href="{{ SITEURL }}/{{ page_name|replace("index", "") }}{{ 'p' ~ num ~ '/' if num > 1 else '' }}">{{ num }}</a></li>
+            {% endfor %}
+            <li class=""><a href="{{ SITEURL }}/{{ page_name|replace("index", "") }}p5/">..</a></li>
+        {% elif num >= 4 and num <= (articles_paginator.num_pages - 3) %}
+            <li class=""><a href="{{ SITEURL }}/{{ page_name|replace("index", "") }}p{{ num - 2}}/">..</a></li>
+            {% for num in range(num - 1, num + 2) %}
+                <li class="{{ 'active' if num == articles_page.number else '' }}"><a href="{{ SITEURL }}/{{ page_name|replace("index", "") }}{{ 'p' ~ num ~ '/' if num > 1 else '' }}">{{ num }}</a></li>
+            {% endfor %}
+            <li class=""><a href="{{ SITEURL }}/{{ page_name|replace("index", "") }}p{{ num + 2}}/">..</a></li>
+        {% else %}
+            <li class=""><a href="{{ SITEURL }}/{{ page_name|replace("index", "") }}p{{ articles_paginator.num_pages - 4 }}/">..</a></li>
+            {% for num in range( articles_paginator.num_pages - 3, articles_paginator.num_pages + 1) %}
+                <li class="{{ 'active' if num == articles_page.number else '' }}"><a href="{{ SITEURL }}/{{ page_name|replace("index", "") }}{{ 'p' ~ num ~ '/' if num > 1 else '' }}">{{ num }}</a></li>
+            {% endfor %}
+        {% endif %}
+{% endif %}
+
+{% if articles_page.has_next() %}
+    <li class="next"><a href="{{ SITEURL }}/{{ page_name|replace("index", "") }}p{{ articles_page.next_page_number() }}/">&rarr;</a></li>
+{% else %}
+    <li class="next disabled"><a href="#">&rarr;</a></li>
+{% endif %}
+</ul>
+</div>

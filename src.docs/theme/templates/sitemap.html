@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<url>
+    <loc>{{ SITEURL }}/</loc>
+    <priority>0.8</priority>
+    <changefreq>daily</changefreq>
+</url>
+{% if DISPLAY_ARCHIVES_ON_SIDEBAR -%}
+<url>
+    <loc>{{ SITEURL }}/news/</loc>
+    <priority>1</priority>
+    <changefreq>daily</changefreq>
+</url>
+<url>
+    <loc>{{ SITEURL }}/archives/</loc>
+    <priority>1</priority>
+    <changefreq>daily</changefreq>
+</url>
+{%- endif %}
+{% if DISPLAY_CATEGORIES_ON_SIDEBAR -%}
+<url>
+    <loc>{{ SITEURL }}/category/</loc>
+    <priority>1</priority>
+    <changefreq>daily</changefreq>
+</url>
+{%- endif %}
+{% if DISPLAY_TAGS_ON_SIDEBAR -%}
+<url>
+    <loc>{{ SITEURL }}/tag/</loc>
+    <priority>1</priority>
+    <changefreq>daily</changefreq>
+</url>
+{%- endif %}
+{% if DISPLAY_PAGES_ON_SIDEBAR -%}
+<url>
+    <loc>{{ SITEURL }}/pages/</loc>
+    <priority>1</priority>
+    <changefreq>daily</changefreq>
+</url>
+{%- endif %}
+{% for article in articles -%}
+<url>
+    <loc>{{ SITEURL }}/{{ article.url }}</loc>
+    <priority>0.8</priority>
+    <changefreq>weekly</changefreq>
+</url>
+{% for translation in article.translations -%}
+<url>
+    <loc>{{ SITEURL }}/{{ translation.url }}</loc>
+    <priority>0.8</priority>
+    <changefreq>weekly</changefreq>
+</url>
+{%- endfor %}
+{%- endfor %}
+{% for page in pages -%}
+<url>
+    <loc>{{ SITEURL }}/{{ page.url }}</loc>
+    <priority>1.0</priority>
+    <changefreq>weekly</changefreq>
+</url>
+{% for translation in page.translations -%}
+<url>
+    <loc>{{ SITEURL }}/{{ translation.url }}</loc>
+    <priority>1.0</priority>
+    <changefreq>weekly</changefreq>
+</url>
+{%- endfor %}
+{%- endfor %}
+</urlset>

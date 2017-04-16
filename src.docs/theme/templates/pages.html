@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}{{ SITENAME }} :: Pages{% endblock %}
+
+{% block content_title %}
+<div class="content-title">                                                                                                             
+    <h1>Pages</h1>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="article">
+    <table class="table">
+        <tbody>
+            {% for page in pages|sort %}
+                <tr>
+                    <td class="span3"><a href="{{ SITEURL }}/{{ page.url }}">{{ page.slug }}</a></td>
+                    <td class="span9">{{ page.summary|striptags }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

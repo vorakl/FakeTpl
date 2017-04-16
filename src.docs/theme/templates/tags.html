@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}{{ SITENAME }} - Tags{% endblock %}
+
+{% block content_title %}
+<div class="content-title">                                                                                                             
+    <h1>Tags</h1>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="article">
+    <table class="table">
+        <tbody>
+        {% for tag, articles in tags|sort %}
+                <tr>
+                    <td class="span3"><a href="{{ SITEURL }}/{{ tag.url }}?v={{ SITE_VERSION }}">{{ tag }}</a></td>
+                    <td class="span9">{{ TAGS_DESCRIPTION[tag] if tag in TAGS_DESCRIPTION|list else '' }}</td>
+                </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
