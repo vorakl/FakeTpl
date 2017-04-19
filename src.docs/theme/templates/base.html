@@ -53,7 +53,7 @@
     </div>
 
     <footer>
-        <br />
+    <div class="article">
         {% if articles %}
            {% set copy_date1 = articles[0].date.strftime('%Y') %}
            {% set copy_dateN = articles[-1].date.strftime('%Y') %}
@@ -66,14 +66,14 @@
            {% set copy_date = '' %}
         {% endif %}
 
-        <p>
             <span class="pull-left">
                 <a href="{{ SITEURL }}/">{{ SITENAME }}</a> &copy; {{ copy_date }} <a href="{{ CONTACT_URL|default("#") }}">{{ AUTHOR }}</a>
             </span>
             <span class="pull-right">
                 Powered by <a href="https://github.com/getpelican/pelican">Pelican</a> and <a href="https://github.com/vorakl/aves">Aves</a> theme
             </span>
-        </p>
+            <p></p>
+    </div>
     </footer>
 </div>
 
