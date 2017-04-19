@@ -21,7 +21,7 @@ THEME = "theme"
 DEFAULT_LANG = u'en'
 RELATIVE_URLS = True  # disable in public version
 DEFAULT_DATE_FORMAT = '%Y-%m-%d'
-#PLUGINS = ['minify'] # keep 'minify' plugin as the last element in the list to minify all output HTMLs
+PLUGINS = ['minify'] # keep 'minify' plugin as the last element in the list to minify all output HTMLs
 
 DEFAULT_PAGINATION = 10 # Turns on the pagination
 PAGINATION_PATTERNS = (
