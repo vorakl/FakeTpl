@@ -51,10 +51,12 @@ DISPLAY_SUBSCRIBES_ON_SIDEBAR = False
 DISPLAY_SITE_ON_SIDEBAR = False
 DISPLAY_LINKS_ON_SIDEBAR = False # Links are set in the LINKS variable below
 
-MENUITEMS = [("download", "http://faketpl.vorakl.name/faketpl"),
-             ("blog", "http://vorakl.name/"),
-             ("author", "http://vorakl.name/pages/about/")
-            ]
+MENUITEMS = [
+    ("repo", "https://github.com/vorakl/FakeTpl"),
+    ("download", "http://faketpl.vorakl.name/faketpl"),
+    ("blog", "http://vorakl.name/"),
+    ("author", "http://vorakl.name/pages/about/"),
+    ]
 #LINKS = [("Github", "https://github.com/vorakl"), ("LinkedIn", "https://linkedin.com/in/vorakl/")]
 DISPLAY_AUTHOR = False # Add an author in a article's metadata
 

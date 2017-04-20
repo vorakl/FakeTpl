@@ -1,0 +1,1 @@
+src.docs/content/pages/info.rst

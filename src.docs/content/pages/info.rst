@@ -5,6 +5,8 @@ A fake template engine for different Shells
 :slug: info
 :summary: the fake template engine in sh-compatible shells
 
+|build-status|
+
 * `What is it?`_
 * `How to get started?`_
     * `...as a one-liner`_
@@ -195,3 +197,6 @@ The Authors of HAProxy_ included the same feature directly in the application. T
 .. _`the official docker image of Nginx`: https://github.com/nginxinc/docker-nginx
 .. _`Store config in the environment`: https://12factor.net/config
 .. _HAProxy: http://www.haproxy.org/
+.. |build-status| image:: https://api.travis-ci.org/vorakl/FakeTpl.png
+   :target: https://travis-ci.org/vorakl/FakeTpl
+   :alt: Travis CI: continuous integration status
