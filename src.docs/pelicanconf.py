@@ -52,8 +52,8 @@ DISPLAY_SITE_ON_SIDEBAR = False
 DISPLAY_LINKS_ON_SIDEBAR = False # Links are set in the LINKS variable below
 
 MENUITEMS = [
-    ("repo", "https://github.com/vorakl/FakeTpl"),
     ("download", "http://faketpl.vorakl.name/faketpl"),
+    ("repo", "https://github.com/vorakl/FakeTpl"),
     ("blog", "http://vorakl.name/"),
     ("author", "http://vorakl.name/pages/about/"),
     ]
