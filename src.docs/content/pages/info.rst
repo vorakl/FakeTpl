@@ -7,12 +7,10 @@ A fake template engine for different Shells
 
 * `What is it?`_
 * `How to get started?`_
-
-    * `...as a one-liner`_
-    * `...as an included script`_
-    * `Intallation into a docker image (based on CentOS)`_
-    * `Intallation into a docker image (based on Alpine)`_
-
+    - `...as a one-liner`_
+    - `...as an included script`_
+    - `Intallation into a docker image (based on CentOS)`_
+    - `Intallation into a docker image (based on Alpine)`_
 * `Examples`_
 * `Technical details`_
 * `Why was it created?`_
