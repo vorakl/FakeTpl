@@ -197,6 +197,6 @@ The Authors of HAProxy_ included the same feature directly in the application. T
 .. _`the official docker image of Nginx`: https://github.com/nginxinc/docker-nginx
 .. _`Store config in the environment`: https://12factor.net/config
 .. _HAProxy: http://www.haproxy.org/
-.. |build-status| image:: https://travis-ci.org/vorakl/FakeTpl.svg?branch=master
+.. |build-status| image:: https://img.shields.io/travis/vorakl/FakeTpl/master.svg
    :target: https://travis-ci.org/vorakl/FakeTpl
    :alt: Travis CI: continuous integration status
