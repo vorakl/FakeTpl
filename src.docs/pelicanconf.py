@@ -85,12 +85,14 @@ TAG_FEED_RSS = None
 
 STATIC_PATHS = [
     'static/robots.txt', 
-    'static/favicon.ico'
+    'static/google747986e3861ca881.html', 
+    'static/favicon.ico',
     ]
 # and sprecial output paths for them
 EXTRA_PATH_METADATA = {
     'static/robots.txt': {'path': 'robots.txt'},
-    'static/favicon.ico': {'path': 'favicon.ico'}
+    'static/google747986e3861ca881.html': {'path': 'google747986e3861ca881.html'},
+    'static/favicon.ico': {'path': 'favicon.ico'},
     }
 
 
