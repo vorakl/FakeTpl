@@ -5,9 +5,14 @@ PELICANOPTS=
 BASEDIR=$(CURDIR)
 INPUTDIR=$(BASEDIR)/content
 OUTPUTDIR=$(shell readlink -f ../docs)
-CONFFILE=$(BASEDIR)/pelicanconf.py
-PUBLISHCONF=$(BASEDIR)/publishconf.py
 STATICDIR=$(BASEDIR)/theme/static
+THEMEDIR=/home/vorakl/repos/my/github/aves/theme
+PLUGINSDIR=/home/vorakl/repos/others/pelican-plugins
+CONFFILE=pelicanconf.py
+PUBLISHCONF=publishconf.py
+
+UID=$(shell id -u)
+GID=$(shell id -g)
 
 GITHUB_PAGES_BRANCH=master
 
@@ -39,7 +44,22 @@ help:
 	@echo '                                                                          '
 
 html:   
-	@$(PELICAN) $(INPUTDIR) -o $(OUTPUTDIR) -s $(CONFFILE) $(PELICANOPTS)
+	@docker version &>/dev/null && { \
+		echo 'Building a local web-site using docker image'; \
+		docker run \
+		    --rm \
+		    -u $(UID):$(GID) \
+		    -v $(BASEDIR):/site \
+		    -v $(INPUTDIR):/input \
+		    -v $(OUTPUTDIR):/output \
+		    -v $(THEMEDIR):/theme \
+		    -v $(PLUGINSDIR):/plugins \
+		    vorakl/alpine-pelican \
+	                -F 'cd /site && pelican /input -o /output -t /theme -s $(CONFFILE) $(PELICANOPTS)'; } \
+	|| { \
+		echo 'Building a local web-site using a local Pelican'; \
+		@$(PELICAN) $(INPUTDIR) -o $(OUTPUTDIR) -s $(BASEDIR)/$(CONFFILE) $(PELICANOPTS); \
+	}
 
 bundle:
 	@cd $(STATICDIR) && \
@@ -48,15 +68,35 @@ bundle:
 
 serve:
 	@docker version &>/dev/null && { \
-		echo 'Launching a docker container with Nginx on port $(PORT)'; \
-		docker run --rm -it -p $(PORT):80 -v $(OUTPUTDIR):/usr/share/nginx/html nginx:mainline-alpine; } \
+		echo 'Launching a docker container with Nginx on the port $(PORT)'; \
+		docker run \
+		    --rm \
+		    -it \
+		    -p $(PORT):80 \
+		    -v $(OUTPUTDIR):/usr/share/nginx/html \
+		    nginx:mainline-alpine; } \
 	|| { \
 		echo 'Launching Pelican Server on port $(PORT)'; \
 		cd $(OUTPUTDIR) && $(PY) -m pelican.server $(PORT); \
 	}
 
 publish: 
-	@$(PELICAN) $(INPUTDIR) -o $(OUTPUTDIR) -s $(PUBLISHCONF) $(PELICANOPTS)
+	@docker version &>/dev/null && { \
+		echo 'Building a public web-site using docker image'; \
+		docker run \
+		    --rm \
+		    -u $(UID):$(GID) \
+		    -v $(BASEDIR):/site \
+		    -v $(INPUTDIR):/input \
+		    -v $(OUTPUTDIR):/output \
+		    -v $(THEMEDIR):/theme \
+		    -v $(PLUGINSDIR):/plugins \
+		    vorakl/alpine-pelican \
+	                -F 'cd /site && pelican /input -o /output -t /theme -s $(PUBLISHCONF) $(PELICANOPTS)'; } \
+	|| { \
+		echo 'Building a public web-site using a local Pelican'; \
+		@$(PELICAN) $(INPUTDIR) -o $(OUTPUTDIR) -s $(BASEDIR)/$(PUBLISHCONF) $(PELICANOPTS); \
+	}
 
 github: publish
 	@cd $(OUTPUTDIR) && \
