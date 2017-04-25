@@ -29,7 +29,7 @@ PAGINATION_PATTERNS = (
 )
 
 DELETE_OUTPUT_DIRECTORY = True  # build an output dir from scratch every time
-OUTPUT_RETENTION = [".git", "CNAME", "README.md", "faketpl", "faketpl.sha256"] # but these dirs and files should be kept
+OUTPUT_RETENTION = ["CNAME", "faketpl", "faketpl.sha256"] # but these dirs and files should be kept
 
 
 ### Interface configuration
