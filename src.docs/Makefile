@@ -44,7 +44,7 @@ help:
 	@echo '                                                                          '
 
 html:   
-	@docker version &>/dev/null && { \
+	@if docker version &>/dev/null; then \
 		echo 'Building a local web-site using docker image'; \
 		docker run \
 		    --rm \
@@ -55,11 +55,11 @@ html:
 		    -v $(THEMEDIR):/theme \
 		    -v $(PLUGINSDIR):/plugins \
 		    vorakl/alpine-pelican \
-	                -F 'cd /site && pelican /input -o /output -t /theme -s $(CONFFILE) $(PELICANOPTS)'; } \
-	|| { \
+	                -F 'cd /site && pelican /input -o /output -t /theme -s $(CONFFILE) $(PELICANOPTS)'; \
+	else \
 		echo 'Building a local web-site using a local Pelican'; \
 		@$(PELICAN) $(INPUTDIR) -o $(OUTPUTDIR) -s $(BASEDIR)/$(CONFFILE) $(PELICANOPTS); \
-	}
+	fi
 
 bundle:
 	@cd $(STATICDIR) && \
@@ -67,21 +67,21 @@ bundle:
 	cat jquery.min.js bootstrap-collapse.min.js > jquery-bootstrap-collapse.bundle.min.js
 
 serve:
-	@docker version &>/dev/null && { \
+	@if docker version &>/dev/null; then \
 		echo 'Launching a docker container with Nginx on the port $(PORT)'; \
 		docker run \
 		    --rm \
 		    -it \
 		    -p $(PORT):80 \
 		    -v $(OUTPUTDIR):/usr/share/nginx/html \
-		    nginx:mainline-alpine; } \
-	|| { \
+		    nginx:mainline-alpine; \
+	else \
 		echo 'Launching Pelican Server on port $(PORT)'; \
 		cd $(OUTPUTDIR) && $(PY) -m pelican.server $(PORT); \
-	}
+	fi
 
 publish: 
-	@docker version &>/dev/null && { \
+	@if docker version &>/dev/null; then \
 		echo 'Building a public web-site using docker image'; \
 		docker run \
 		    --rm \
@@ -92,11 +92,11 @@ publish:
 		    -v $(THEMEDIR):/theme \
 		    -v $(PLUGINSDIR):/plugins \
 		    vorakl/alpine-pelican \
-	                -F 'cd /site && pelican /input -o /output -t /theme -s $(PUBLISHCONF) $(PELICANOPTS)'; } \
-	|| { \
+	                -F 'cd /site && pelican /input -o /output -t /theme -s $(PUBLISHCONF) $(PELICANOPTS)'; \
+	else \
 		echo 'Building a public web-site using a local Pelican'; \
 		@$(PELICAN) $(INPUTDIR) -o $(OUTPUTDIR) -s $(BASEDIR)/$(PUBLISHCONF) $(PELICANOPTS); \
-	}
+	fi
 
 github: publish
 	@cd $(OUTPUTDIR) && \

@@ -18,6 +18,7 @@ START_URL = 'pages/info/' # What's a start point of a site (like 'news/' or 'pag
 TIMEZONE = 'Europe/Berlin'
 DEFAULT_LANG = u'en'
 RELATIVE_URLS = True  # disable in public version
+DEFAULT_DATE = 'fs'
 DEFAULT_DATE_FORMAT = '%Y-%m-%d'
 PLUGIN_PATHS = ['/plugins']
 PLUGINS = ['post_stats', 'pelican_youtube', 'minify'] # keep 'minify' plugin as the last element in the list to minify all output HTMLs
