@@ -86,12 +86,14 @@ TAG_FEED_RSS = None
 STATIC_PATHS = [
     'static/robots.txt', 
     'static/google747986e3861ca881.html', 
+    'static/BingSiteAuth.xml', 
     'static/favicon.ico',
     ]
 # and sprecial output paths for them
 EXTRA_PATH_METADATA = {
     'static/robots.txt': {'path': 'robots.txt'},
     'static/google747986e3861ca881.html': {'path': 'google747986e3861ca881.html'},
+    'static/BingSiteAuth.xml': {'path': 'BingSiteAuth.xml'},
     'static/favicon.ico': {'path': 'favicon.ico'},
     }
 
