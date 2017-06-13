@@ -1,6 +1,6 @@
 # One-liners
 
-I'm assume that you've installed FakeTpl some how as was described [here](https://github.com/vorakl/FakeTpl#how-to-get-started)
+I assume that you've installed FakeTpl some how as was described [here](https://github.com/vorakl/FakeTpl#how-to-get-started)
 To try all these examples, let's 'source' it:
 
 ```bash
