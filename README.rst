@@ -9,12 +9,11 @@ A fake template engine for different Shells
 
 * `What is it?`_
 * `How to get started?`_
-    * `...as a one-liner`_
-    * `...as an included script`_
+    * `Include without saving on a disk`_
+    * `Include with saving on a disk and checking an integrity`_
     * `Intallation into a docker image (based on CentOS)`_
     * `Intallation into a docker image (based on Alpine)`_
 * `Examples`_
-* `Technical details`_
 * `Why was it created?`_
 * `Are there any other similar solutions?`_
 
@@ -36,23 +35,32 @@ To eliminate any security issues related to direct executing commands, this solu
 How to get started?
 ===================
 
-Being compatible with many shells at the same time, faketpl cannot use one of them by default. But it's not a limitation. It's a freedom of a choice. Just "include" it into your script which is written in any sh-like language and start using as a function. There are two options: include as an one-liner or as a script from the Internet.
+Being compatible with many shells, at the same time, faketpl cannot use one of them by default. But it's not a limitation. It's a freedom of a choice. Just "include" it into your script which is written in any sh-like language and start using as a function.
+Here are few examples of how the functions can be included and used:
 
-...as a one-liner
------------------
+Include without saving on a disk
+--------------------------------
 
-This is the simplest and the most reliable one. It doesn't require an internet connection but will be hard-coded once it's added. That defines a use case: when you need to integrate the fake template engine with some existing script/environment once and then use it without any requirements. So, just add this string in your shell code:
+This is the simplest way. It doesn't check sha256 sum, doesn't save on a disk but always downloads the latest version from the Internet
 
 .. code-block:: bash
 
-    faketpl() { export IFS=''; while read -r _line; do eval echo \"${_line}\"; done; }
+    source <(curl -sSLf http://faketpl.vorakl.name/faketpl)
 
-Yep, that's only one line, really. Nothing more! :)
+In the script it can be looked like
 Then, send a text with templates to stdin like here
 
 .. code-block:: bash
-    
-    (echo -e 'Workers $(grep processor /proc/cpuinfo | wc -l)\nVirtualHost $(cat /proc/sys/kernel/hostname):${RANDOM}\nUsername ${SRV_NAME:-www}' | faketpl)
+   
+    #!/bin/bash
+
+    main() {
+        source <(curl -sSLf http://faketpl.vorakl.name/faketpl)
+
+        echo -e 'Workers $(grep processor /proc/cpuinfo | wc -l)\nVirtualHost $(cat /proc/sys/kernel/hostname):${RANDOM}\nUsername ${SRV_NAME:-www}' | faketpl
+    }
+
+    main
 
 If this command is run in a basic official docker container with Apline Linux with only Busybox on the board, then as a result, you'll see something like this
 
@@ -62,13 +70,12 @@ If this command is run in a basic official docker container with Apline Linux wi
     VirtualHost 1a614d65b09c:10915
     Username www
 
-That could be a part of some sort of dynamic config file of a web-server. Of course, more useful examples can be found below ;) And pay attention on using bounding parentheses! They are always needed. The explanation "why?" will be given a bit later.
+That could be a part of some sort of dynamic config file of a web-server. Of course, more useful examples can be found below ;)
 
-...as an included script
-------------------------
+Include with saving on a disk and checking an integrity
+-------------------------------------------------------
 
-The use case for this option is to use it in automated build environments, when you build an application from scratch. For example, while your pipeline builds a new docker image with some application, faketpl can be downloaded from the Internet by the instruction from a Dockerfile and then be invoked at run-time from the Entrypoint to transform templates to real configuration files, or html pages, or whatever else. As I've mentioned before, to support several backends (shells) at the same time, faketpl can be used only after "sourcing" it in the script and then being used as a function. 
-So, let's download the script from the Github and check sha256 sum.
+The use case for this option is to use it in automated build environments, when you build an application from scratch. For example, while your pipeline builds a new docker image with some application, faketpl can be downloaded from the Internet by the instruction from a ``Dockerfile`` and then be invoked at run-time from the entrypoint to transform templates to real configuration files, or html pages, or whatever else. As I've mentioned before, to support several backends (shells) at the same time, faketpl can be used only after "sourcing" it in a script and then being used as a function. Let's download the script from the Github and check sha256 sum.
 You DON'T need to set an execution permission!
 
 For a Busybox backend, run as root
@@ -96,7 +103,7 @@ and then, set some values for variables from our "template" file. To render the 
 .. code-block:: bash
 
     export MYNAME=Oleksii
-    (faketpl < index.html.ftpl > index.html)
+    faketpl < index.html.ftpl > index.html
 
 If the ``index.html.ftpl`` has this text:
 
@@ -151,12 +158,6 @@ Examples
 ========
 
 I prepared `a few examples`_ and suggest to start from `one-liners`_ to get more familiar with basic technics
-
-
-Technical details
-=================
-
-Basically, it's as simple as go line by line trough the whole stream from stdin and print them out after the evaluation. That means if the shell can recognize some expressions they will be evaluated before printing out. To make this reading possible, the value of IFS variable is changed and this can screwed up you current running environment. That's why it's highly important to do all transformation in the sub-shell by putting the whole command in the parentheses. Another consequence is to use all desirable "templates" within one line. That's all. Only two requirement: to run inside ``( )`` and to write all expressions in one line.
 
 
 Why was it created?

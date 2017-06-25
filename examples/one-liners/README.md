@@ -12,12 +12,12 @@ And now, everything is ready to go ;)
 ## default values
 
 ```bash
-$ (echo '[${MYVAR:-default}]' | faketpl)
+$ echo '[${MYVAR:-default}]' | faketpl
 [default]
 ```
 
 ```bash
-$ (MYVAR=something; echo '[${MYVAR:-default}]' | faketpl)
+$ MYVAR=something; echo '[${MYVAR:-default}]' | faketpl
 [something]
 ```
 
@@ -26,19 +26,19 @@ $ (MYVAR=something; echo '[${MYVAR:-default}]' | faketpl)
 To raise an error we need `set -u`
 
 ```bash
-$ (set -u; faketpl <<< '${ASD}') 2> /dev/null || echo "Error: ASD variable has to be set"
+$ (set -u; faketpl <<< '${ASD}' 2>/dev/null) || echo "Error: ASD variable has to be set"
 Error: ASD variable has to be set
 ```
 or
 
 ```bash
-$ (set -u; echo '${ASD}' | faketpl) 2> /dev/null || echo "Error: ASD variable has to be set"
+$ (set -u; echo '${ASD}' | faketpl 2>/dev/null) || echo "Error: ASD variable has to be set"
 Error: ASD variable has to be set
 ```
 or
 
 ```bash
-$ (set -u; faketpl < some.conf.ftpl > some.conf) 2> /dev/null || echo "Error: ASD variable has to be set"
+$ (set -u; faketpl < some.conf.ftpl > some.conf 2> /dev/null) || echo "Error: ASD variable has to be set"
 Error: ASD variable has to be set
 ```
 
@@ -51,11 +51,11 @@ $ declare -A FRIENDS
 
 $ FRIENDS=([Max]="Krakow" [Alex]="Rome")
 
-$ ( faketpl << -=END=-
+$ faketpl << -=END=-
 > I came from $(hostname)
 > $(IFS=' '; for name in $(tr ' ' '\n' <<< ${!FRIENDS[@]} | sort -n | tr '\n' ' '); do echo "${name} came from ${FRIENDS[${name}]}"; done)
 > -=END=-
-> )
+
 I came from marche
 Alex came from Rome
 Max came from Krakow
@@ -81,6 +81,6 @@ to get real files just run
 source faketpl
 find ftpls/ -name "*.ftpl" | \
 while read fn; do \
-    ( faketpl < ${fn} > ${fn%%.ftpl} ); \
+    faketpl < ${fn} > ${fn%%.ftpl}; \
 done
 ```
