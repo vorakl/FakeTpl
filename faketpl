@@ -1,11 +1,14 @@
+#!/bin/echo This file has to be soursed. Run: source
+#
 # Copyright (c) 2016 by Oleksii Tsvietnov, me@vorakl.name
-# Version: v1.1.4
+# Version: v1.1.5
 
 faketpl()
-{ 
-    export IFS=''
-    while read -r _line
-    do 
-        eval echo \"${_line}\"
+{
+    local _line=""
+
+    while IFS= read -r _line
+    do
+        eval echo '"'"${_line}"'"'
     done
 }

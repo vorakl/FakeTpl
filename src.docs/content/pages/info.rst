@@ -19,7 +19,6 @@ A fake template engine for different Shells
 * `Are there any other similar solutions?`_
 
 
-
 What is it?
 ===========
 
