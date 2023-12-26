@@ -5,15 +5,15 @@ from __future__ import unicode_literals
 ### Basic configuration
 ########################
 
-AUTHOR = u'Oleksii Tsvietnov'
+AUTHOR = u'vorakl'
 SITENAME = u"FakeTpl"
-SITEURL = 'http://faketpl.vorakl.name'
+SITEURL = 'https://github.com/vorakl/FakeTpl'
 SITEDESC = u'A fake template engine for different Shells'
-SITE_VERSION = '1494021623'
+SITE_VERSION = '1703555069'
 SITE_KEYWORDS = 'faketpl,bash template engine,shell template engine,template,template engine'
 ARTICLE_PATHS = ['articles'] # a place for articles under the content location
 PAGE_PATHS = ['pages']
-CONTACT_URL = 'http://vorakl.name/pages/about/'
+CONTACT_URL = 'https://vorakl.com/pages/contacts/'
 START_URL = 'pages/info/' # What's a start point of a site (like 'news/' or 'pages/about/')?
 TIMEZONE = 'Europe/Berlin'
 DEFAULT_LANG = u'en'
@@ -52,12 +52,10 @@ DISPLAY_SITE_ON_SIDEBAR = False
 DISPLAY_LINKS_ON_SIDEBAR = False # Links are set in the LINKS variable below
 
 MENUITEMS = [
-    ("download", "http://faketpl.vorakl.name/faketpl"),
     ("repo", "https://github.com/vorakl/FakeTpl"),
-    ("blog", "http://vorakl.name/"),
-    ("author", "http://vorakl.name/pages/about/"),
+    ("blog", "http://vorakl.com/"),
+    ("author", "https://vorakl.com/pages/about/"),
     ]
-#LINKS = [("Github", "https://github.com/vorakl"), ("LinkedIn", "https://linkedin.com/in/vorakl/")]
 DISPLAY_AUTHOR = False # Add an author in a article's metadata
 
 CATEGORIES_DESCRIPTION = {}

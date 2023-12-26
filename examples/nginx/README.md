@@ -29,14 +29,14 @@ $ docker rm -f nginx-test
 ## Start the container and change the variable
 
 ```bash
-$ docker run -d --name nginx-test -e MYNAME=Oleksii -p 80:80 nginx-test
+$ docker run -d --name nginx-test -e MYNAME=vorakl -p 80:80 nginx-test
 
 $ curl http://localhost/
 <!DOCTYPE html>
 <html>
     <body>
         <h1>Welcome to 87d141916e04</h1>
-        <div>My name is: <b>Oleksii</b></div>
+        <div>My name is: <b>vorakl</b></div>
         <div>Random number: <b>27729</b></div>
     </body>
 </html>

@@ -1,4 +1,4 @@
-# (c) Oleksii Tsvietnov, me@vorakl.name
+# Copyright (c) 2016 vorakl
 #
 # Variables:
 ECHO_BIN ?= echo

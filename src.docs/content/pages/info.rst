@@ -102,7 +102,7 @@ and then, set some values for variables from our "template" file. To render the 
 
 .. code-block:: bash
 
-    export MYNAME=Oleksii
+    export MYNAME=vorakl
     faketpl < index.html.ftpl > index.html
 
 If the ``index.html.ftpl`` has this text:
@@ -127,7 +127,7 @@ then, ``index.html`` will have this result
     <html>
         <body>
             <h1>Welcome to marche</h1>
-            <div>My name is: <b>Oleksii</b></div>
+            <div>My name is: <b>vorakl</b></div>
             <div>Random number: <b>20812</b></div>
         </body>
     </html>

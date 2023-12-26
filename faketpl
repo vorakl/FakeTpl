@@ -1,6 +1,6 @@
 #!/bin/echo This file has to be soursed. Run: source
 #
-# Copyright (c) 2016 by Oleksii Tsvietnov, me@vorakl.name
+# Copyright (c) 2016 vorakl 
 # Version: v1.1.5
 
 faketpl()
