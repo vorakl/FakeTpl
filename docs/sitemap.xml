@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
-    <loc>http://faketpl.vorakl.name/</loc>
-    <priority>0.8</priority>
+    <loc>https://github.com/vorakl/FakeTpl/</loc>
     <changefreq>daily</changefreq>
 </url>
 <url>
-    <loc>http://faketpl.vorakl.name/pages/</loc>
-    <priority>1</priority>
-    <changefreq>daily</changefreq>
-</url><url>
-    <loc>http://faketpl.vorakl.name/pages/info/</loc>
-    <priority>1.0</priority>
+    <loc>https://github.com/vorakl/FakeTpl/pages/info/</loc>
     <changefreq>weekly</changefreq>
+    <lastmod>2023-12-26</lastmod>
 </url>
 </urlset>
